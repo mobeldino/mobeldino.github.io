@@ -2,14 +2,12 @@
   "siteTitle": "English Practice – Mr. Beldi",
   "units": [
     {
-      "id": "unit-1",
-      "title": "Unit 1",
-      "subtitle": "Sentence basics",
+      "id": "unlock-1",
+      "title": "Unlock 1",
       "lessons": [
         {
           "id": "lesson-1",
           "title": "Lesson 1",
-          "note": "Subjects and verbs",
           "html": "units/unit-1/lesson-1/worksheet.html",
           "pdf": "units/unit-1/lesson-1/worksheet.pdf"
         },
@@ -22,9 +20,22 @@
       ]
     },
     {
-      "id": "unit-2",
-      "title": "Unit 2",
-      "subtitle": "",
+      "id": "unlock-2",
+      "title": "Unlock 2",
+      "lessons": [
+        { "id": "lesson-1", "title": "Lesson 1" }
+      ]
+    },
+    {
+      "id": "unlock-3",
+      "title": "Unlock 3",
+      "lessons": [
+        { "id": "lesson-1", "title": "Lesson 1" }
+      ]
+    },
+    {
+      "id": "unlock-4",
+      "title": "Unlock 4",
       "lessons": [
         { "id": "lesson-1", "title": "Lesson 1" }
       ]

@@ -27,6 +27,9 @@
   .wrap{max-width:860px;margin:0 auto;padding:20px 16px}
   header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
   header h1{font-size:1.45rem;margin:0;font-weight:700;letter-spacing:-.01em;flex:1}
+  .tabs{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:6px;background:var(--line);padding:5px;border-radius:12px;margin-bottom:18px}
+  .tabs a{text-align:center;padding:10px 4px;border-radius:9px;text-decoration:none;font-weight:600;font-size:.95rem;color:var(--muted);white-space:nowrap}
+  .tabs a.on{background:var(--card);color:var(--accent);box-shadow:var(--shadow)}
   .crumbs{font-size:.92rem;color:var(--muted);margin-bottom:14px}
   .crumbs a{text-decoration:none;color:var(--accent)}
   .crumbs span{margin:0 6px}
@@ -72,6 +75,7 @@
     <h1 id="siteTitle">Class Materials</h1>
     <a class="tool teacher-only noprint" href="#/qr">▦ QR codes</a>
   </header>
+  <nav class="tabs noprint" id="tabs"></nav>
   <nav class="crumbs noprint" id="crumbs"></nav>
   <main id="app"><p class="empty">Loading…</p></main>
 </div>
@@ -134,7 +138,8 @@ function route(){
   const h = decodeURIComponent(location.hash.replace(/^#\/?/,''));
   const [a,b] = h.split('/');
   window.scrollTo(0,0);
-  if(!a) return home();
+  renderTabs(a==='qr' ? '' : (a || (DATA.units[0]||{}).id));
+  if(!a) return DATA.units.length ? unitPage(DATA.units[0]) : home();
   if(a==='qr') return qrPage(b);
   const unit = findUnit(a);
   if(!unit) return notFound();
@@ -142,6 +147,12 @@ function route(){
   const lesson = (unit.lessons||[]).find(l=>l.id===b);
   if(!lesson) return notFound();
   lessonPage(unit, lesson);
+}
+
+function renderTabs(activeId){
+  const t = document.getElementById('tabs');
+  t.style.setProperty('--n', Math.max(1, DATA.units.length));
+  t.innerHTML = DATA.units.map(u=>`<a href="#/${esc(u.id)}" class="${u.id===activeId?'on':''}">${esc(u.title)}</a>`).join('');
 }
 
 function home(){
@@ -157,12 +168,12 @@ function home(){
 }
 
 function unitPage(u){
-  setCrumbs([{t:'Home',h:'/'},{t:u.title}]);
+  crumbs.innerHTML='';
   const ls = u.lessons||[];
   app.innerHTML = `
     <div class="row noprint teacher-only" style="justify-content:flex-start;margin:0 0 14px">
-      <a class="tool" href="#/qr/${esc(u.id)}">▦ Print QR codes for this unit</a>
-      <button class="tool" onclick="showQR('/${esc(u.id)}','${esc(u.title).replace(/'/g,"\\'")}')">QR for whole unit</button>
+      <a class="tool" href="#/qr/${esc(u.id)}">▦ Print QR codes for ${esc(u.title)}</a>
+      <button class="tool" onclick="showQR('/${esc(u.id)}','${esc(u.title).replace(/'/g,"\\'")}')">QR for ${esc(u.title)}</button>
     </div>` +
     (ls.length ? '<div class="grid">' + ls.map((l,i)=>`
       <a class="card" href="#/${esc(u.id)}/${esc(l.id)}">
@@ -173,7 +184,7 @@ function unitPage(u){
 }
 
 function lessonPage(u,l){
-  setCrumbs([{t:'Home',h:'/'},{t:u.title,h:'/'+u.id},{t:l.title}]);
+  setCrumbs([{t:u.title,h:'/'+u.id},{t:l.title}]);
   const fileName = p => p.split('/').pop();
   let html = `<h2 style="margin:0 0 4px">${esc(l.title)}</h2>
     ${l.note?`<p style="color:var(--muted);margin:0 0 10px">${esc(l.note)}</p>`:''}
@@ -206,7 +217,7 @@ function qrPage(unitId){
     </div>`;
   units.forEach(u=>{
     html += `<h3 class="unit-h">${esc(u.title)}</h3><div class="qr-grid">`;
-    html += qrCard('/'+u.id, u.title, 'Whole unit');
+    html += qrCard('/'+u.id, u.title, 'All lessons');
     (u.lessons||[]).forEach(l=> html += qrCard(`/${u.id}/${l.id}`, l.title, u.title));
     html += '</div>';
   });
