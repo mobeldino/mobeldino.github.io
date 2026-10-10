@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Class Materials</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+<script src="assets/qrcode.js"></script>
+<style>
+  :root{
+    --bg:#f6f5f2; --card:#ffffff; --ink:#1d1f24; --muted:#6b6f78; --line:#e4e2dc;
+    --accent:#2f5bd3; --accent-ink:#ffffff; --pdf:#c0392b; --html:#1f8a5b;
+    --sig:#7b3fb8; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.05);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#14161a; --card:#1d2026; --ink:#eceef2; --muted:#9aa0ab; --line:#2c3038;
+      --accent:#6d8ff0; --pdf:#e06a5c; --html:#3fbf88; --sig:#b48be6; --shadow:none;
+    }
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;min-height:100vh;padding-bottom:70px}
+  a{color:inherit}
+  .wrap{max-width:860px;margin:0 auto;padding:20px 16px}
+  header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
+  header h1{font-size:1.45rem;margin:0;font-weight:700;letter-spacing:-.01em;flex:1}
+  .crumbs{font-size:.92rem;color:var(--muted);margin-bottom:14px}
+  .crumbs a{text-decoration:none;color:var(--accent)}
+  .crumbs span{margin:0 6px}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);text-decoration:none;display:block;transition:transform .12s,border-color .12s}
+  a.card:hover{transform:translateY(-2px);border-color:var(--accent)}
+  .card .num{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
+  .card h2{font-size:1.1rem;margin:4px 0 6px}
+  .card p{margin:0;color:var(--muted);font-size:.92rem}
+  .btns{display:flex;flex-direction:column;gap:12px;margin-top:8px}
+  .btn{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:12px;text-decoration:none;font-weight:600;font-size:1.05rem;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);cursor:pointer;color:var(--ink);font-family:inherit;width:100%;text-align:left}
+  .btn .tag{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:6px;color:#fff;letter-spacing:.04em}
+  .btn.html .tag{background:var(--html)} .btn.pdf .tag{background:var(--pdf)}
+  .btn small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
+  .btn .go{margin-left:auto;color:var(--muted)}
+  .tool{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 12px;font:500 .9rem Inter,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
+  .tool.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+  .empty{color:var(--muted);padding:30px 0;text-align:center}
+  .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .qr-card{background:#fff;color:#111;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;break-inside:avoid}
+  .qr-card svg{width:100%;max-width:180px;height:auto}
+  .qr-card .t{font-weight:700;margin-top:6px}
+  .qr-card .s{font-size:.8rem;color:#555}
+  .qr-card .u{font-size:.65rem;color:#888;word-break:break-all;margin-top:4px}
+  .unit-h{margin:26px 0 10px;font-size:1.1rem}
+  .big-qr{background:#fff;border-radius:14px;padding:18px;text-align:center;max-width:340px;margin:0 auto;color:#111}
+  .big-qr svg{width:100%;height:auto}
+  dialog{border:none;border-radius:16px;padding:20px;max-width:380px;width:92vw;background:var(--card);color:var(--ink)}
+  dialog::backdrop{background:rgba(0,0,0,.45)}
+  .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+  .sig{position:fixed;right:14px;bottom:8px;font-family:"Monsieur La Doulaise",cursive;color:var(--sig);font-size:1.6rem;pointer-events:none;opacity:.9}
+  .teacher-only{display:none} body.teacher .teacher-only{display:inline-flex}
+  @media print{
+    body{background:#fff;padding:0} .noprint,header .tool,.crumbs{display:none!important}
+    .qr-grid{grid-template-columns:repeat(3,1fr)} .qr-card{border:1px solid #ccc}
+    .sig{position:fixed;color:#7b3fb8}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1 id="siteTitle">Class Materials</h1>
+    <a class="tool teacher-only noprint" href="#/qr">▦ QR codes</a>
+  </header>
+  <nav class="crumbs noprint" id="crumbs"></nav>
+  <main id="app"><p class="empty">Loading…</p></main>
+</div>
+
+<dialog id="qrDlg">
+  <div class="big-qr" id="qrBox"></div>
+  <p style="text-align:center;font-weight:600;margin:12px 0 0" id="qrTitle"></p>
+  <div class="row">
+    <button class="tool primary" id="qrPng">Download QR (PNG)</button>
+    <button class="tool" id="qrCopy">Copy link</button>
+    <button class="tool" onclick="qrDlg.close()">Close</button>
+  </div>
+</dialog>
+
+<div class="sig">Mohamed Beldi</div>
+
+<script>
+// Teacher mode: open the site once with ?teacher to unlock QR tools (remembered on this device).
+const params = new URLSearchParams(location.search);
+try{
+  if(params.has('teacher')) localStorage.setItem('teacher','1');
+  if(params.has('student')) localStorage.removeItem('teacher');
+  if(localStorage.getItem('teacher')==='1') document.body.classList.add('teacher');
+}catch(e){ if(params.has('teacher')) document.body.classList.add('teacher'); }
+
+let DATA = null;
+const app = document.getElementById('app');
+const crumbs = document.getElementById('crumbs');
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const baseUrl = () => location.origin + location.pathname.replace(/index\.html$/,''); // short links for QR
+const linkFor = hash => baseUrl() + '#' + hash;
+
+function qrSvg(text, cell=5){
+  const q = qrcode(0,'M'); q.addData(text); q.make();
+  return q.createSvgTag({cellSize:cell, margin:2, scalable:true});
+}
+
+async function load(){
+  try{
+    const r = await fetch('content.json', {cache:'no-store'});
+    DATA = await r.json();
+  }catch(e){
+    app.innerHTML = '<p class="empty">Could not load content.json. Check that the file exists and has no typing errors (commas, quotes).</p>';
+    return;
+  }
+  document.getElementById('siteTitle').textContent = DATA.siteTitle || 'Class Materials';
+  document.title = DATA.siteTitle || 'Class Materials';
+  route();
+}
+
+function setCrumbs(parts){
+  crumbs.innerHTML = parts.map((p,i)=> i<parts.length-1
+    ? `<a href="#${p.h}">${esc(p.t)}</a><span>›</span>` : `<b>${esc(p.t)}</b>`).join('');
+}
+
+function findUnit(id){ return DATA.units.find(u=>u.id===id); }
+
+function route(){
+  if(!DATA) return;
+  const h = decodeURIComponent(location.hash.replace(/^#\/?/,''));
+  const [a,b] = h.split('/');
+  window.scrollTo(0,0);
+  if(!a) return home();
+  if(a==='qr') return qrPage(b);
+  const unit = findUnit(a);
+  if(!unit) return notFound();
+  if(!b) return unitPage(unit);
+  const lesson = (unit.lessons||[]).find(l=>l.id===b);
+  if(!lesson) return notFound();
+  lessonPage(unit, lesson);
+}
+
+function home(){
+  setCrumbs([{t:'Home'}]);
+  const units = DATA.units||[];
+  if(!units.length){ app.innerHTML='<p class="empty">No units yet.</p>'; return; }
+  app.innerHTML = '<div class="grid">' + units.map((u,i)=>`
+    <a class="card" href="#/${esc(u.id)}">
+      <div class="num">Unit ${i+1}</div>
+      <h2>${esc(u.title)}</h2>
+      <p>${esc(u.subtitle||'')}${u.subtitle?' · ':''}${(u.lessons||[]).length} lesson${(u.lessons||[]).length===1?'':'s'}</p>
+    </a>`).join('') + '</div>';
+}
+
+function unitPage(u){
+  setCrumbs([{t:'Home',h:'/'},{t:u.title}]);
+  const ls = u.lessons||[];
+  app.innerHTML = `
+    <div class="row noprint teacher-only" style="justify-content:flex-start;margin:0 0 14px">
+      <a class="tool" href="#/qr/${esc(u.id)}">▦ Print QR codes for this unit</a>
+      <button class="tool" onclick="showQR('/${esc(u.id)}','${esc(u.title).replace(/'/g,"\\'")}')">QR for whole unit</button>
+    </div>` +
+    (ls.length ? '<div class="grid">' + ls.map((l,i)=>`
+      <a class="card" href="#/${esc(u.id)}/${esc(l.id)}">
+        <div class="num">Lesson ${i+1}</div>
+        <h2>${esc(l.title)}</h2>
+        <p>${[l.html?'Interactive':'' , l.pdf?'PDF':''].filter(Boolean).join(' · ')||'Coming soon'}</p>
+      </a>`).join('') + '</div>' : '<p class="empty">No lessons in this unit yet.</p>');
+}
+
+function lessonPage(u,l){
+  setCrumbs([{t:'Home',h:'/'},{t:u.title,h:'/'+u.id},{t:l.title}]);
+  const fileName = p => p.split('/').pop();
+  let html = `<h2 style="margin:0 0 4px">${esc(l.title)}</h2>
+    ${l.note?`<p style="color:var(--muted);margin:0 0 10px">${esc(l.note)}</p>`:''}
+    <div class="btns">`;
+  if(l.html) html += `
+      <a class="btn html" href="${esc(l.html)}"><span class="tag">HTML</span>
+        <span>Practice online<small>Interactive worksheet</small></span><span class="go">›</span></a>`;
+  if(l.pdf) html += `
+      <a class="btn pdf" href="${esc(l.pdf)}" target="_blank" rel="noopener"><span class="tag">PDF</span>
+        <span>Open PDF<small>View or print</small></span><span class="go">›</span></a>
+      <a class="btn pdf" href="${esc(l.pdf)}" download="${esc(fileName(l.pdf))}"><span class="tag">⬇</span>
+        <span>Download PDF<small>${esc(fileName(l.pdf))}</small></span><span class="go">›</span></a>`;
+  if(l.html) html += `
+      <a class="btn html" href="${esc(l.html)}" download="${esc(fileName(l.html))}"><span class="tag">⬇</span>
+        <span>Download worksheet<small>${esc(fileName(l.html))}</small></span><span class="go">›</span></a>`;
+  if(!l.html && !l.pdf) html += '<p class="empty">Files coming soon.</p>';
+  html += `</div>
+    <div class="row teacher-only noprint" style="justify-content:flex-start;margin-top:18px">
+      <button class="tool primary" onclick="showQR('/${esc(u.id)}/${esc(l.id)}','${esc(u.title+' – '+l.title).replace(/'/g,"\\'")}')">▦ Show QR code</button>
+    </div>`;
+  app.innerHTML = html;
+}
+
+function qrPage(unitId){
+  const units = unitId ? DATA.units.filter(u=>u.id===unitId) : DATA.units;
+  setCrumbs([{t:'Home',h:'/'},{t:'QR codes'}]);
+  let html = `<div class="row noprint" style="justify-content:flex-start">
+      <button class="tool primary" onclick="window.print()">🖨 Print / Save as PDF</button>
+      ${unitId?'<a class="tool" href="#/qr">All units</a>':''}
+    </div>`;
+  units.forEach(u=>{
+    html += `<h3 class="unit-h">${esc(u.title)}</h3><div class="qr-grid">`;
+    html += qrCard('/'+u.id, u.title, 'Whole unit');
+    (u.lessons||[]).forEach(l=> html += qrCard(`/${u.id}/${l.id}`, l.title, u.title));
+    html += '</div>';
+  });
+  app.innerHTML = html;
+}
+function qrCard(hash, title, sub){
+  const url = linkFor(hash);
+  return `<div class="qr-card">${qrSvg(url)}<div class="t">${esc(title)}</div><div class="s">${esc(sub)}</div><div class="u">${esc(url)}</div></div>`;
+}
+
+function notFound(){
+  setCrumbs([{t:'Home',h:'/'},{t:'Not found'}]);
+  app.innerHTML = '<p class="empty">This page doesn’t exist. <a href="#/">Go home</a></p>';
+}
+
+// QR dialog
+const qrDlg = document.getElementById('qrDlg');
+let currentUrl = '', currentTitle = '';
+function showQR(hash, title){
+  currentUrl = linkFor(hash); currentTitle = title;
+  document.getElementById('qrBox').innerHTML = qrSvg(currentUrl, 8);
+  document.getElementById('qrTitle').textContent = title;
+  qrDlg.showModal();
+}
+document.getElementById('qrCopy').onclick = async e => {
+  try{ await navigator.clipboard.writeText(currentUrl); e.target.textContent='Copied ✓'; }
+  catch{ prompt('Copy this link:', currentUrl); }
+  setTimeout(()=>e.target.textContent='Copy link',1500);
+};
+document.getElementById('qrPng').onclick = () => {
+  const q = qrcode(0,'M'); q.addData(currentUrl); q.make();
+  const n = q.getModuleCount(), cell = 16, m = 4, size = (n+m*2)*cell, label = 60;
+  const c = document.createElement('canvas'); c.width = size; c.height = size+label;
+  const x = c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.fillStyle='#000';
+  for(let r=0;r<n;r++) for(let k=0;k<n;k++) if(q.isDark(r,k)) x.fillRect((k+m)*cell,(r+m)*cell,cell,cell);
+  x.font='bold 28px Inter, sans-serif'; x.textAlign='center'; x.fillText(currentTitle, size/2, size+30, size-20);
+  const a = document.createElement('a'); a.download = currentTitle.replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'-QR.png';
+  a.href = c.toDataURL('image/png'); a.click();
+};
+
+addEventListener('hashchange', route);
+load();
+</script>
+</body>
+</html>
