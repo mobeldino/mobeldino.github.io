@@ -1,0 +1,411 @@
+{
+  "siteTitle": "English practice with Mr. Beldi",
+  "levels": [
+    {
+      "id": "unlock-1",
+      "title": "Unlock 1",
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": [
+                {
+                  "id": "lesson-1",
+                  "title": "Lesson 1",
+                  "note": "Subjects and verbs",
+                  "html": "units/unit-1/lesson-1/worksheet.html",
+                  "pdf": "units/unit-1/lesson-1/worksheet.pdf"
+                },
+                {
+                  "id": "lesson-2",
+                  "title": "Lesson 2",
+                  "html": "units/unit-1/lesson-2/worksheet.html",
+                  "pdf": "units/unit-1/lesson-2/worksheet.pdf"
+                }
+              ]
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unlock-2",
+      "title": "Unlock 2",
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unlock-3",
+      "title": "Unlock 3",
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "unlock-4",
+      "title": "Unlock 4",
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "units": [
+            {
+              "id": "unit-1",
+              "title": "Unit 1",
+              "lessons": []
+            },
+            {
+              "id": "unit-2",
+              "title": "Unit 2",
+              "lessons": []
+            },
+            {
+              "id": "unit-3",
+              "title": "Unit 3",
+              "lessons": []
+            },
+            {
+              "id": "unit-4",
+              "title": "Unit 4",
+              "lessons": []
+            },
+            {
+              "id": "unit-5",
+              "title": "Unit 5",
+              "lessons": []
+            },
+            {
+              "id": "unit-6",
+              "title": "Unit 6",
+              "lessons": []
+            },
+            {
+              "id": "unit-7",
+              "title": "Unit 7",
+              "lessons": []
+            },
+            {
+              "id": "unit-8",
+              "title": "Unit 8",
+              "lessons": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
