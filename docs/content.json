@@ -1,43 +1,86 @@
 {
-  "siteTitle": "English Practice – Mr. Beldi",
-  "units": [
+  "siteTitle": "English practice with Mr. Beldi",
+  "levels": [
     {
       "id": "unlock-1",
       "title": "Unlock 1",
-      "lessons": [
+      "books": [
         {
-          "id": "lesson-1",
-          "title": "Lesson 1",
-          "html": "units/unit-1/lesson-1/worksheet.html",
-          "pdf": "units/unit-1/lesson-1/worksheet.pdf"
+          "id": "rw",
+          "title": "Reading & Writing",
+          "lessons": [
+            {
+              "id": "lesson-1",
+              "title": "Lesson 1",
+              "note": "Subjects and verbs",
+              "html": "units/unit-1/lesson-1/worksheet.html",
+              "pdf": "units/unit-1/lesson-1/worksheet.pdf"
+            },
+            {
+              "id": "lesson-2",
+              "title": "Lesson 2",
+              "html": "units/unit-1/lesson-2/worksheet.html",
+              "pdf": "units/unit-1/lesson-2/worksheet.pdf"
+            },
+            {
+              "id": "lesson-3",
+              "title": "Lesson 3"
+            }
+          ]
         },
         {
-          "id": "lesson-2",
-          "title": "Lesson 2",
-          "html": "units/unit-1/lesson-2/worksheet.html",
-          "pdf": "units/unit-1/lesson-2/worksheet.pdf"
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "lessons": []
         }
       ]
     },
     {
       "id": "unlock-2",
       "title": "Unlock 2",
-      "lessons": [
-        { "id": "lesson-1", "title": "Lesson 1" }
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "lessons": []
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "lessons": []
+        }
       ]
     },
     {
       "id": "unlock-3",
       "title": "Unlock 3",
-      "lessons": [
-        { "id": "lesson-1", "title": "Lesson 1" }
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "lessons": []
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "lessons": []
+        }
       ]
     },
     {
       "id": "unlock-4",
       "title": "Unlock 4",
-      "lessons": [
-        { "id": "lesson-1", "title": "Lesson 1" }
+      "books": [
+        {
+          "id": "rw",
+          "title": "Reading & Writing",
+          "lessons": []
+        },
+        {
+          "id": "ls",
+          "title": "Listening & Speaking",
+          "lessons": []
+        }
       ]
     }
   ]

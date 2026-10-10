@@ -3,262 +3,299 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Class Materials</title>
+<title>Unlock Practice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
 <script src="assets/qrcode.js"></script>
 <style>
-  :root{
-    --bg:#f6f5f2; --card:#ffffff; --ink:#1d1f24; --muted:#6b6f78; --line:#e4e2dc;
-    --accent:#2f5bd3; --accent-ink:#ffffff; --pdf:#c0392b; --html:#1f8a5b;
-    --sig:#7b3fb8; --shadow:0 1px 2px rgba(0,0,0,.05),0 4px 14px rgba(0,0,0,.05);
+:root{
+  --paper:#F4F6FB; --surface:#FFFFFF; --ink:#17203A; --muted:#5A6378; --line:#DDE2EE;
+  --l1:#D9480F; --l2:#0B7A75; --l3:#5B3CC4; --l4:#C2185B;
+  --lv:var(--l1); --sig:#7B3FB8;
+  --display:"Bricolage Grotesque", system-ui, sans-serif;
+  --body:"Atkinson Hyperlegible", system-ui, sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#10162A; --surface:#182038; --ink:#EEF1F8; --muted:#A3ABC0; --line:#2A3452;
+    --l1:#F26B3A; --l2:#22A39C; --l3:#8B6DF0; --l4:#E64A85; --sig:#B48BE6;
   }
-  @media (prefers-color-scheme: dark){
-    :root:not([data-theme="light"]){
-      --bg:#14161a; --card:#1d2026; --ink:#eceef2; --muted:#9aa0ab; --line:#2c3038;
-      --accent:#6d8ff0; --pdf:#e06a5c; --html:#3fbf88; --sig:#b48be6; --shadow:none;
-    }
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0}
-  body{background:var(--bg);color:var(--ink);font:16px/1.5 Inter,system-ui,sans-serif;min-height:100vh;padding-bottom:70px}
-  a{color:inherit}
-  .wrap{max-width:860px;margin:0 auto;padding:20px 16px}
-  header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:18px}
-  header h1{font-size:1.45rem;margin:0;font-weight:700;letter-spacing:-.01em;flex:1}
-  .tabs{display:grid;grid-template-columns:repeat(var(--n,4),1fr);gap:6px;background:var(--line);padding:5px;border-radius:12px;margin-bottom:18px}
-  .tabs a{text-align:center;padding:10px 4px;border-radius:9px;text-decoration:none;font-weight:600;font-size:.95rem;color:var(--muted);white-space:nowrap}
-  .tabs a.on{background:var(--card);color:var(--accent);box-shadow:var(--shadow)}
-  .crumbs{font-size:.92rem;color:var(--muted);margin-bottom:14px}
-  .crumbs a{text-decoration:none;color:var(--accent)}
-  .crumbs span{margin:0 6px}
-  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
-  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;box-shadow:var(--shadow);text-decoration:none;display:block;transition:transform .12s,border-color .12s}
-  a.card:hover{transform:translateY(-2px);border-color:var(--accent)}
-  .card .num{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--accent)}
-  .card h2{font-size:1.1rem;margin:4px 0 6px}
-  .card p{margin:0;color:var(--muted);font-size:.92rem}
-  .btns{display:flex;flex-direction:column;gap:12px;margin-top:8px}
-  .btn{display:flex;align-items:center;gap:12px;padding:16px 18px;border-radius:12px;text-decoration:none;font-weight:600;font-size:1.05rem;border:1px solid var(--line);background:var(--card);box-shadow:var(--shadow);cursor:pointer;color:var(--ink);font-family:inherit;width:100%;text-align:left}
-  .btn .tag{font-size:.72rem;font-weight:700;padding:3px 8px;border-radius:6px;color:#fff;letter-spacing:.04em}
-  .btn.html .tag{background:var(--html)} .btn.pdf .tag{background:var(--pdf)}
-  .btn small{display:block;font-weight:400;color:var(--muted);font-size:.85rem}
-  .btn .go{margin-left:auto;color:var(--muted)}
-  .tool{border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:9px;padding:8px 12px;font:500 .9rem Inter,sans-serif;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:6px}
-  .tool.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
-  .empty{color:var(--muted);padding:30px 0;text-align:center}
-  .qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
-  .qr-card{background:#fff;color:#111;border:1px solid var(--line);border-radius:12px;padding:14px;text-align:center;break-inside:avoid}
-  .qr-card svg{width:100%;max-width:180px;height:auto}
-  .qr-card .t{font-weight:700;margin-top:6px}
-  .qr-card .s{font-size:.8rem;color:#555}
-  .qr-card .u{font-size:.65rem;color:#888;word-break:break-all;margin-top:4px}
-  .unit-h{margin:26px 0 10px;font-size:1.1rem}
-  .big-qr{background:#fff;border-radius:14px;padding:18px;text-align:center;max-width:340px;margin:0 auto;color:#111}
-  .big-qr svg{width:100%;height:auto}
-  dialog{border:none;border-radius:16px;padding:20px;max-width:380px;width:92vw;background:var(--card);color:var(--ink)}
-  dialog::backdrop{background:rgba(0,0,0,.45)}
-  .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
-  .sig{position:fixed;right:14px;bottom:8px;font-family:"Monsieur La Doulaise",cursive;color:var(--sig);font-size:1.6rem;pointer-events:none;opacity:.9}
-  .teacher-only{display:none} body.teacher .teacher-only{display:inline-flex}
-  @media print{
-    body{background:#fff;padding:0} .noprint,header .tool,.crumbs{display:none!important}
-    .qr-grid{grid-template-columns:repeat(3,1fr)} .qr-card{border:1px solid #ccc}
-    .sig{position:fixed;color:#7b3fb8}
-  }
+}
+:root[data-theme="dark"]{
+  --paper:#10162A; --surface:#182038; --ink:#EEF1F8; --muted:#A3ABC0; --line:#2A3452;
+  --l1:#F26B3A; --l2:#22A39C; --l3:#8B6DF0; --l4:#E64A85; --sig:#B48BE6;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:17px/1.55 var(--body);min-height:100vh;padding-bottom:64px;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--lv);outline-offset:3px;border-radius:6px}
+.wrap{max-width:880px;margin:0 auto;padding:22px 16px}
+
+/* top: wordmark + level numerals */
+.top{display:flex;align-items:flex-end;flex-wrap:wrap;gap:6px 18px;margin-bottom:28px}
+.brand{font:800 clamp(44px,11vw,76px)/.85 var(--display);font-variation-settings:"wdth" 80;letter-spacing:-.03em;margin:0;text-decoration:none;color:var(--ink)}
+.levels{display:flex;gap:8px;flex:1;min-width:250px}
+.levels a{flex:1;max-width:84px;aspect-ratio:1/1.08;display:grid;place-items:center;border-radius:14px;text-decoration:none;
+  font:800 clamp(34px,9vw,56px)/1 var(--display);font-variation-settings:"wdth" 75;color:var(--c);
+  background:var(--surface);border:2px solid color-mix(in srgb,var(--c) 35%,transparent);transition:transform .15s,background .15s}
+.levels a:hover{transform:translateY(-2px)}
+.levels a.on{background:var(--c);color:#fff;border-color:var(--c);box-shadow:0 10px 22px -10px var(--c)}
+.levels a[data-l="1"]{--c:var(--l1)} .levels a[data-l="2"]{--c:var(--l2)}
+.levels a[data-l="3"]{--c:var(--l3)} .levels a[data-l="4"]{--c:var(--l4)}
+.who{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--muted);font-size:.95rem;margin-top:6px}
+.tool{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:7px 12px;font:700 .88rem var(--body);cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.tool.fill{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.teacher-only{display:none!important} body.teacher .teacher-only{display:inline-flex!important}
+
+/* level view: two book covers */
+.lvl-h{font:700 1.5rem/1.2 var(--display);margin:0 0 4px}
+.lvl-sub{color:var(--muted);margin:0 0 20px}
+.shelf{max-width:640px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,4vw,32px);padding-bottom:22px;border-bottom:10px solid color-mix(in srgb,var(--lv) 22%,var(--line));border-radius:0 0 4px 4px}
+.bookwrap{text-decoration:none;display:block}
+.book{position:relative;aspect-ratio:3/4;border-radius:4px 12px 12px 4px;background:var(--lv);color:#fff;overflow:hidden;
+  padding:clamp(14px,4vw,24px) clamp(14px,4vw,22px) clamp(14px,4vw,22px) clamp(24px,6vw,36px);display:flex;flex-direction:column;justify-content:space-between;
+  box-shadow:inset 9px 0 0 rgba(0,0,0,.22),inset 11px 0 0 rgba(255,255,255,.18),0 18px 30px -16px color-mix(in srgb,var(--lv) 80%,#000);
+  transition:transform .25s cubic-bezier(.2,.8,.2,1)}
+.bookwrap:hover .book,.bookwrap:focus-visible .book{transform:translateY(-6px) rotate(-1deg)}
+.rw::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 21px,rgba(255,255,255,.16) 21px 22px);pointer-events:none}
+.ls::before{content:"";position:absolute;left:0;right:0;bottom:16%;height:36%;pointer-events:none;opacity:.22;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cg fill='white'%3E%3Crect x='2' y='17' width='4' height='6' rx='2'/%3E%3Crect x='10' y='12' width='4' height='16' rx='2'/%3E%3Crect x='18' y='6' width='4' height='28' rx='2'/%3E%3Crect x='26' y='14' width='4' height='12' rx='2'/%3E%3Crect x='34' y='2' width='4' height='36' rx='2'/%3E%3Crect x='42' y='10' width='4' height='20' rx='2'/%3E%3Crect x='50' y='16' width='4' height='8' rx='2'/%3E%3Crect x='58' y='8' width='4' height='24' rx='2'/%3E%3Crect x='66' y='4' width='4' height='32' rx='2'/%3E%3Crect x='74' y='13' width='4' height='14' rx='2'/%3E%3Crect x='82' y='9' width='4' height='22' rx='2'/%3E%3Crect x='90' y='15' width='4' height='10' rx='2'/%3E%3Crect x='98' y='5' width='4' height='30' rx='2'/%3E%3Crect x='106' y='12' width='4' height='16' rx='2'/%3E%3Crect x='114' y='17' width='4' height='6' rx='2'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat}
+.book.ls,.bandhead.ls{background:color-mix(in srgb,var(--lv) 68%,#101830)}
+.book .lvlno{position:relative;font:800 clamp(15px,3.6vw,19px)/1 var(--display);opacity:.9}
+.book .ttl{position:relative;font:800 clamp(21px,5.6vw,34px)/1.02 var(--display);font-variation-settings:"wdth" 85;letter-spacing:-.01em;margin:0}
+.book .cnt{position:relative;font-size:.85rem;opacity:.92}
+
+/* book + lesson header band */
+.bandhead{background:var(--lv);color:#fff;border-radius:16px;padding:20px 20px 22px;position:relative;overflow:hidden;margin-bottom:20px}
+.bandhead.ls::before{left:auto;right:0;width:60%;top:15%;bottom:auto;height:70%}
+.bandhead > *{position:relative}
+.crumb{font-size:.95rem;opacity:.95;margin:0 0 6px}
+.crumb a{color:#fff;text-underline-offset:3px}
+.bandhead h1{font:800 clamp(30px,7vw,44px)/1.02 var(--display);font-variation-settings:"wdth" 85;margin:0}
+
+/* lesson list */
+.lessons{list-style:none;margin:0;padding:0;background:var(--surface);border-radius:16px;border:1.5px solid var(--line);overflow:hidden}
+.lessons li + li{border-top:1.5px solid var(--line)}
+.lessons a{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:12px;padding:14px 16px;text-decoration:none}
+.lessons a:hover{background:color-mix(in srgb,var(--lv) 7%,transparent)}
+.lessons .n{font:800 34px/1 var(--display);font-variation-settings:"wdth" 75;color:var(--lv);text-align:center}
+.lessons .t{font-weight:700}
+.lessons .m{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
+.lessons .soon .n{color:var(--muted);opacity:.6}
+.fmt{display:flex;gap:6px}
+.fmt span{font:700 .72rem/1 var(--body);padding:5px 7px;border-radius:6px;background:color-mix(in srgb,var(--lv) 12%,transparent);color:var(--lv)}
+.empty{background:var(--surface);border:1.5px dashed var(--line);border-radius:16px;padding:28px 20px;color:var(--muted);text-align:center}
+
+/* lesson view */
+.lessonhead{display:flex;align-items:flex-end;gap:16px}
+.lessonhead.generic{flex-direction:row-reverse;justify-content:flex-end;gap:10px}
+.lessonhead.generic h1{padding-bottom:.08em}
+.bignum{font:800 clamp(84px,22vw,140px)/.78 var(--display);font-variation-settings:"wdth" 75;letter-spacing:-.04em}
+.actions{display:grid;gap:12px;margin:4px 0 18px}
+.act{display:flex;align-items:center;gap:14px;padding:18px;border-radius:14px;text-decoration:none;font:700 1.12rem/1.2 var(--body);border:2px solid var(--ink)}
+.act.primary{background:var(--ink);color:var(--paper)}
+.act.secondary{background:var(--surface);color:var(--ink)}
+.act small{display:block;font-weight:400;font-size:.88rem;opacity:.75;margin-top:3px}
+.act svg{flex:none;width:28px;height:28px}
+.dl{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.95rem}
+.dl a{color:var(--ink);font-weight:700;text-underline-offset:3px}
+.tbar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
+
+/* QR */
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:24px}
+.qr-card{background:#fff;color:#17203A;border:1.5px solid #DDE2EE;border-top:8px solid var(--c,#17203A);border-radius:12px;padding:12px;text-align:center;break-inside:avoid}
+.qr-card svg{width:100%;max-width:170px;height:auto}
+.qr-card .t{font:800 1.05rem/1.2 var(--display)}
+.qr-card .s{font-size:.82rem;color:#5A6378}
+.qr-h{font:800 1.3rem var(--display);margin:22px 0 10px;color:var(--c)}
+dialog{border:none;border-radius:18px;padding:20px;max-width:380px;width:92vw;background:var(--surface);color:var(--ink)}
+dialog::backdrop{background:rgba(10,14,30,.55)}
+.big-qr{background:#fff;border-radius:12px;padding:14px}
+.big-qr svg{width:100%;height:auto;display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
+
+.sig{position:fixed;right:14px;bottom:6px;font:1.7rem "Monsieur La Doulaise",cursive;color:var(--sig);pointer-events:none}
+@media (max-width:420px){ .lessons a{grid-template-columns:44px 1fr auto;padding:13px 12px} .lessons .n{font-size:30px} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+@media print{
+  body{background:#fff;padding:0} .noprint{display:none!important}
+  .qr-grid{grid-template-columns:repeat(3,1fr)} .sig{color:#7B3FB8}
+}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header>
-    <h1 id="siteTitle">Class Materials</h1>
-    <a class="tool teacher-only noprint" href="#/qr">▦ QR codes</a>
+  <header class="top noprint">
+    <a class="brand" href="#/">Unlock</a>
+    <nav class="levels" id="levels" aria-label="Levels"></nav>
+    <div class="who"><span id="siteTitle"></span><a class="tool teacher-only" href="#/qr">QR codes</a></div>
   </header>
-  <nav class="tabs noprint" id="tabs"></nav>
-  <nav class="crumbs noprint" id="crumbs"></nav>
   <main id="app"><p class="empty">Loading…</p></main>
 </div>
 
 <dialog id="qrDlg">
   <div class="big-qr" id="qrBox"></div>
-  <p style="text-align:center;font-weight:600;margin:12px 0 0" id="qrTitle"></p>
+  <p style="text-align:center;font-weight:700;margin:12px 0 0" id="qrTitle"></p>
   <div class="row">
-    <button class="tool primary" id="qrPng">Download QR (PNG)</button>
+    <button class="tool fill" id="qrPng">Download QR</button>
     <button class="tool" id="qrCopy">Copy link</button>
-    <button class="tool" onclick="qrDlg.close()">Close</button>
+    <button class="tool" id="qrClose">Close</button>
   </div>
 </dialog>
 
 <div class="sig">Mohamed Beldi</div>
 
 <script>
-// Teacher mode: open the site once with ?teacher to unlock QR tools (remembered on this device).
-const params = new URLSearchParams(location.search);
+const params=new URLSearchParams(location.search);
 try{
   if(params.has('teacher')) localStorage.setItem('teacher','1');
   if(params.has('student')) localStorage.removeItem('teacher');
   if(localStorage.getItem('teacher')==='1') document.body.classList.add('teacher');
 }catch(e){ if(params.has('teacher')) document.body.classList.add('teacher'); }
 
-let DATA = null;
-const app = document.getElementById('app');
-const crumbs = document.getElementById('crumbs');
-const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const baseUrl = () => location.origin + location.pathname.replace(/index\.html$/,''); // short links for QR
-const linkFor = hash => baseUrl() + '#' + hash;
+const ICON_PLAY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
+const ICON_PDF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>';
 
-function qrSvg(text, cell=5){
-  const q = qrcode(0,'M'); q.addData(text); q.make();
-  return q.createSvgTag({cellSize:cell, margin:2, scalable:true});
-}
+let DATA=null;
+const app=document.getElementById('app');
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const baseUrl=()=>location.origin+location.pathname.replace(/index\.html$/,'');
+const linkFor=h=>baseUrl()+'#'+h;
+const lvIndex=lv=>DATA.levels.indexOf(lv)+1;
+const colorVar=i=>`var(--l${((i-1)%4)+1})`;
+function setLevelColor(i){ document.documentElement.style.setProperty('--lv', i?colorVar(i):'var(--ink)'); }
+function qrSvg(t,cell=5){const q=qrcode(0,'M');q.addData(t);q.make();return q.createSvgTag({cellSize:cell,margin:2,scalable:true});}
+const plural=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
+const ready=l=>l.html||l.pdf;
 
 async function load(){
-  try{
-    const r = await fetch('content.json', {cache:'no-store'});
-    DATA = await r.json();
-  }catch(e){
-    app.innerHTML = '<p class="empty">Could not load content.json. Check that the file exists and has no typing errors (commas, quotes).</p>';
-    return;
-  }
-  document.getElementById('siteTitle').textContent = DATA.siteTitle || 'Class Materials';
-  document.title = DATA.siteTitle || 'Class Materials';
+  try{ DATA=await (await fetch('content.json',{cache:'no-store'})).json(); }
+  catch(e){ app.innerHTML='<p class="empty">The lesson list couldn’t be loaded. Check content.json for a missing comma or quote.</p>'; return; }
+  document.getElementById('siteTitle').textContent=DATA.siteTitle||'';
+  document.title=DATA.siteTitle||'Unlock Practice';
   route();
 }
 
-function setCrumbs(parts){
-  crumbs.innerHTML = parts.map((p,i)=> i<parts.length-1
-    ? `<a href="#${p.h}">${esc(p.t)}</a><span>›</span>` : `<b>${esc(p.t)}</b>`).join('');
+function renderLevels(activeId){
+  document.getElementById('levels').innerHTML=DATA.levels.map((lv,i)=>
+    `<a href="#/${esc(lv.id)}" data-l="${(i%4)+1}" class="${lv.id===activeId?'on':''}" aria-label="${esc(lv.title)}" ${lv.id===activeId?'aria-current="page"':''}>${i+1}</a>`).join('');
 }
-
-function findUnit(id){ return DATA.units.find(u=>u.id===id); }
 
 function route(){
   if(!DATA) return;
-  const h = decodeURIComponent(location.hash.replace(/^#\/?/,''));
-  const [a,b] = h.split('/');
+  const parts=decodeURIComponent(location.hash.replace(/^#\/?/,'')).split('/').filter(Boolean);
   window.scrollTo(0,0);
-  renderTabs(a==='qr' ? '' : (a || (DATA.units[0]||{}).id));
-  if(!a) return DATA.units.length ? unitPage(DATA.units[0]) : home();
-  if(a==='qr') return qrPage(b);
-  const unit = findUnit(a);
-  if(!unit) return notFound();
-  if(!b) return unitPage(unit);
-  const lesson = (unit.lessons||[]).find(l=>l.id===b);
-  if(!lesson) return notFound();
-  lessonPage(unit, lesson);
+  if(parts[0]==='qr'){ renderLevels(''); setLevelColor(0); return qrPage(parts[1]); }
+  let lvId=parts[0];
+  if(!lvId){ try{ lvId=localStorage.getItem('lastLevel'); }catch(e){} }
+  const lv=DATA.levels.find(x=>x.id===lvId)||DATA.levels[0];
+  if(!lv){ app.innerHTML='<p class="empty">No levels yet.</p>'; return; }
+  if(parts[0] && lv.id!==parts[0]) return notFound();
+  try{ localStorage.setItem('lastLevel',lv.id); }catch(e){}
+  renderLevels(lv.id); setLevelColor(lvIndex(lv));
+  if(!parts[1]) return levelPage(lv);
+  const bk=(lv.books||[]).find(b=>b.id===parts[1]); if(!bk) return notFound();
+  if(!parts[2]) return bookPage(lv,bk);
+  const li=(bk.lessons||[]).findIndex(l=>l.id===parts[2]); if(li<0) return notFound();
+  lessonPage(lv,bk,bk.lessons[li],li+1);
 }
 
-function renderTabs(activeId){
-  const t = document.getElementById('tabs');
-  t.style.setProperty('--n', Math.max(1, DATA.units.length));
-  t.innerHTML = DATA.units.map(u=>`<a href="#/${esc(u.id)}" class="${u.id===activeId?'on':''}">${esc(u.title)}</a>`).join('');
+function levelPage(lv){
+  const books=lv.books||[];
+  app.innerHTML=`<h2 class="lvl-h">${esc(lv.title)}</h2><p class="lvl-sub">Choose your book.</p>
+  <div class="shelf">`+books.map(b=>{
+    const n=(b.lessons||[]).filter(ready).length;
+    return `<a class="bookwrap" href="#/${esc(lv.id)}/${esc(b.id)}">
+      <div class="book ${esc(b.style||b.id)}">
+        <span class="lvlno">${esc(lv.title)}</span>
+        <h3 class="ttl">${esc(b.title)}</h3>
+        <span class="cnt">${n?plural(n,'lesson'):'Lessons coming soon'}</span>
+      </div></a>`;}).join('')+`</div>`;
 }
 
-function home(){
-  setCrumbs([{t:'Home'}]);
-  const units = DATA.units||[];
-  if(!units.length){ app.innerHTML='<p class="empty">No units yet.</p>'; return; }
-  app.innerHTML = '<div class="grid">' + units.map((u,i)=>`
-    <a class="card" href="#/${esc(u.id)}">
-      <div class="num">Unit ${i+1}</div>
-      <h2>${esc(u.title)}</h2>
-      <p>${esc(u.subtitle||'')}${u.subtitle?' · ':''}${(u.lessons||[]).length} lesson${(u.lessons||[]).length===1?'':'s'}</p>
-    </a>`).join('') + '</div>';
+function bookPage(lv,bk){
+  const ls=bk.lessons||[];
+  let html=`<section class="bandhead ${esc(bk.style||bk.id)}">
+    <p class="crumb"><a href="#/${esc(lv.id)}">${esc(lv.title)}</a></p>
+    <h1>${esc(bk.title)}</h1></section>`;
+  html+= ls.length ? `<ol class="lessons">`+ls.map((l,i)=>{
+    const ok=ready(l);
+    return `<li class="${ok?'':'soon'}"><a href="#/${esc(lv.id)}/${esc(bk.id)}/${esc(l.id)}">
+      <span class="n">${i+1}</span>
+      <span class="t">${esc(l.title)}<span class="m">${ok?esc(l.note||''):'Coming soon'}</span></span>
+      <span class="fmt">${l.html?'<span>Online</span>':''}${l.pdf?'<span>PDF</span>':''}</span></a></li>`;}).join('')+`</ol>`
+    : `<p class="empty">No lessons in this book yet.</p>`;
+  html+=`<div class="tbar">
+    <a class="tool teacher-only" href="#/qr/${esc(lv.id)}">Print QR codes for ${esc(lv.title)}</a>
+    <button class="tool teacher-only" data-qr="/${esc(lv.id)}/${esc(bk.id)}" data-title="${esc(lv.title+' – '+bk.title)}">QR for this book</button></div>`;
+  app.innerHTML=html;
 }
 
-function unitPage(u){
-  crumbs.innerHTML='';
-  const ls = u.lessons||[];
-  app.innerHTML = `
-    <div class="row noprint teacher-only" style="justify-content:flex-start;margin:0 0 14px">
-      <a class="tool" href="#/qr/${esc(u.id)}">▦ Print QR codes for ${esc(u.title)}</a>
-      <button class="tool" onclick="showQR('/${esc(u.id)}','${esc(u.title).replace(/'/g,"\\'")}')">QR for ${esc(u.title)}</button>
-    </div>` +
-    (ls.length ? '<div class="grid">' + ls.map((l,i)=>`
-      <a class="card" href="#/${esc(u.id)}/${esc(l.id)}">
-        <div class="num">Lesson ${i+1}</div>
-        <h2>${esc(l.title)}</h2>
-        <p>${[l.html?'Interactive':'' , l.pdf?'PDF':''].filter(Boolean).join(' · ')||'Coming soon'}</p>
-      </a>`).join('') + '</div>' : '<p class="empty">No lessons in this unit yet.</p>');
+function lessonPage(lv,bk,l,num){
+  const fn=p=>p.split('/').pop();
+  let html=`<section class="bandhead ${esc(bk.style||bk.id)}">
+    <p class="crumb"><a href="#/${esc(lv.id)}">${esc(lv.title)}</a> &nbsp;/&nbsp; <a href="#/${esc(lv.id)}/${esc(bk.id)}">${esc(bk.title)}</a></p>
+    <div class="lessonhead${/^lesson\s*\d+$/i.test(l.title.trim())?' generic':''}"><span class="bignum" aria-hidden="true">${num}</span>
+    ${/^lesson\s*\d+$/i.test(l.title.trim()) ? `<h1 aria-label="${esc(l.title)}">Lesson</h1>` : `<h1>${esc(l.title)}</h1>`}</div></section>`;
+  if(l.note) html+=`<p style="margin:-6px 0 16px;color:var(--muted)">${esc(l.note)}</p>`;
+  if(ready(l)){
+    html+=`<div class="actions">`;
+    if(l.html) html+=`<a class="act primary" href="${esc(l.html)}">${ICON_PLAY}<span>Practice online<small>Do the exercises on your phone</small></span></a>`;
+    if(l.pdf) html+=`<a class="act secondary" href="${esc(l.pdf)}" target="_blank" rel="noopener">${ICON_PDF}<span>Open the PDF<small>View or print the worksheet</small></span></a>`;
+    html+=`</div><div class="dl">`;
+    if(l.html) html+=`<a href="${esc(l.html)}" download="${esc(fn(l.html))}">Download worksheet</a>`;
+    if(l.pdf) html+=`<a href="${esc(l.pdf)}" download="${esc(fn(l.pdf))}">Download PDF</a>`;
+    html+=`</div>`;
+  } else html+=`<p class="empty">This lesson isn’t ready yet. Check back after class.</p>`;
+  html+=`<div class="tbar"><button class="tool fill teacher-only" data-qr="/${esc(lv.id)}/${esc(bk.id)}/${esc(l.id)}" data-title="${esc(lv.title+' – '+bk.title+' – '+l.title)}">Show QR code</button></div>`;
+  app.innerHTML=html;
 }
 
-function lessonPage(u,l){
-  setCrumbs([{t:u.title,h:'/'+u.id},{t:l.title}]);
-  const fileName = p => p.split('/').pop();
-  let html = `<h2 style="margin:0 0 4px">${esc(l.title)}</h2>
-    ${l.note?`<p style="color:var(--muted);margin:0 0 10px">${esc(l.note)}</p>`:''}
-    <div class="btns">`;
-  if(l.html) html += `
-      <a class="btn html" href="${esc(l.html)}"><span class="tag">HTML</span>
-        <span>Practice online<small>Interactive worksheet</small></span><span class="go">›</span></a>`;
-  if(l.pdf) html += `
-      <a class="btn pdf" href="${esc(l.pdf)}" target="_blank" rel="noopener"><span class="tag">PDF</span>
-        <span>Open PDF<small>View or print</small></span><span class="go">›</span></a>
-      <a class="btn pdf" href="${esc(l.pdf)}" download="${esc(fileName(l.pdf))}"><span class="tag">⬇</span>
-        <span>Download PDF<small>${esc(fileName(l.pdf))}</small></span><span class="go">›</span></a>`;
-  if(l.html) html += `
-      <a class="btn html" href="${esc(l.html)}" download="${esc(fileName(l.html))}"><span class="tag">⬇</span>
-        <span>Download worksheet<small>${esc(fileName(l.html))}</small></span><span class="go">›</span></a>`;
-  if(!l.html && !l.pdf) html += '<p class="empty">Files coming soon.</p>';
-  html += `</div>
-    <div class="row teacher-only noprint" style="justify-content:flex-start;margin-top:18px">
-      <button class="tool primary" onclick="showQR('/${esc(u.id)}/${esc(l.id)}','${esc(u.title+' – '+l.title).replace(/'/g,"\\'")}')">▦ Show QR code</button>
-    </div>`;
-  app.innerHTML = html;
-}
-
-function qrPage(unitId){
-  const units = unitId ? DATA.units.filter(u=>u.id===unitId) : DATA.units;
-  setCrumbs([{t:'Home',h:'/'},{t:'QR codes'}]);
-  let html = `<div class="row noprint" style="justify-content:flex-start">
-      <button class="tool primary" onclick="window.print()">🖨 Print / Save as PDF</button>
-      ${unitId?'<a class="tool" href="#/qr">All units</a>':''}
-    </div>`;
-  units.forEach(u=>{
-    html += `<h3 class="unit-h">${esc(u.title)}</h3><div class="qr-grid">`;
-    html += qrCard('/'+u.id, u.title, 'All lessons');
-    (u.lessons||[]).forEach(l=> html += qrCard(`/${u.id}/${l.id}`, l.title, u.title));
-    html += '</div>';
+function qrPage(lvId){
+  const levels=lvId?DATA.levels.filter(x=>x.id===lvId):DATA.levels;
+  let html=`<div class="row noprint" style="justify-content:flex-start;margin-bottom:6px">
+    <button class="tool fill" onclick="window.print()">Print or save as PDF</button>
+    ${lvId?'<a class="tool" href="#/qr">All levels</a>':''}</div>`;
+  levels.forEach(lv=>{
+    const c=colorVar(lvIndex(lv));
+    (lv.books||[]).forEach(bk=>{
+      html+=`<h3 class="qr-h" style="--c:${c}">${esc(lv.title)} – ${esc(bk.title)}</h3><div class="qr-grid">`;
+      html+=card(`/${lv.id}/${bk.id}`,bk.title,'All lessons',c);
+      (bk.lessons||[]).forEach(l=>html+=card(`/${lv.id}/${bk.id}/${l.id}`,l.title,`${lv.title} – ${bk.title}`,c));
+      html+=`</div>`;
+    });
   });
-  app.innerHTML = html;
+  app.innerHTML=html;
 }
-function qrCard(hash, title, sub){
-  const url = linkFor(hash);
-  return `<div class="qr-card">${qrSvg(url)}<div class="t">${esc(title)}</div><div class="s">${esc(sub)}</div><div class="u">${esc(url)}</div></div>`;
-}
+function card(h,t,s,c){ return `<div class="qr-card" style="--c:${c}">${qrSvg(linkFor(h))}<div class="t">${esc(t)}</div><div class="s">${esc(s)}</div></div>`; }
+function notFound(){ app.innerHTML='<p class="empty">This page doesn’t exist. Pick a level above.</p>'; }
 
-function notFound(){
-  setCrumbs([{t:'Home',h:'/'},{t:'Not found'}]);
-  app.innerHTML = '<p class="empty">This page doesn’t exist. <a href="#/">Go home</a></p>';
-}
-
-// QR dialog
-const qrDlg = document.getElementById('qrDlg');
-let currentUrl = '', currentTitle = '';
-function showQR(hash, title){
-  currentUrl = linkFor(hash); currentTitle = title;
-  document.getElementById('qrBox').innerHTML = qrSvg(currentUrl, 8);
-  document.getElementById('qrTitle').textContent = title;
-  qrDlg.showModal();
-}
-document.getElementById('qrCopy').onclick = async e => {
-  try{ await navigator.clipboard.writeText(currentUrl); e.target.textContent='Copied ✓'; }
-  catch{ prompt('Copy this link:', currentUrl); }
+/* QR dialog */
+const dlg=document.getElementById('qrDlg'); let curUrl='',curTitle='';
+app.addEventListener('click',e=>{
+  const b=e.target.closest('[data-qr]'); if(!b) return;
+  curUrl=linkFor(b.dataset.qr); curTitle=b.dataset.title;
+  document.getElementById('qrBox').innerHTML=qrSvg(curUrl,8);
+  document.getElementById('qrTitle').textContent=curTitle; dlg.showModal();
+});
+document.getElementById('qrClose').onclick=()=>dlg.close();
+document.getElementById('qrCopy').onclick=async e=>{
+  try{await navigator.clipboard.writeText(curUrl);e.target.textContent='Copied';}catch{prompt('Copy this link:',curUrl);}
   setTimeout(()=>e.target.textContent='Copy link',1500);
 };
-document.getElementById('qrPng').onclick = () => {
-  const q = qrcode(0,'M'); q.addData(currentUrl); q.make();
-  const n = q.getModuleCount(), cell = 16, m = 4, size = (n+m*2)*cell, label = 60;
-  const c = document.createElement('canvas'); c.width = size; c.height = size+label;
-  const x = c.getContext('2d'); x.fillStyle='#fff'; x.fillRect(0,0,c.width,c.height); x.fillStyle='#000';
-  for(let r=0;r<n;r++) for(let k=0;k<n;k++) if(q.isDark(r,k)) x.fillRect((k+m)*cell,(r+m)*cell,cell,cell);
-  x.font='bold 28px Inter, sans-serif'; x.textAlign='center'; x.fillText(currentTitle, size/2, size+30, size-20);
-  const a = document.createElement('a'); a.download = currentTitle.replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'-QR.png';
-  a.href = c.toDataURL('image/png'); a.click();
+document.getElementById('qrPng').onclick=()=>{
+  const q=qrcode(0,'M');q.addData(curUrl);q.make();
+  const n=q.getModuleCount(),cell=16,m=4,size=(n+m*2)*cell,lab=70;
+  const c=document.createElement('canvas');c.width=size;c.height=size+lab;const x=c.getContext('2d');
+  x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#17203A';
+  for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+m)*cell,(r+m)*cell,cell,cell);
+  x.font='bold 30px sans-serif';x.textAlign='center';x.fillText(curTitle,size/2,size+36,size-24);
+  const a=document.createElement('a');a.download=curTitle.replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'-QR.png';a.href=c.toDataURL('image/png');a.click();
 };
 
-addEventListener('hashchange', route);
+addEventListener('hashchange',route);
 load();
 </script>
 </body>
