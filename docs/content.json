@@ -1,5 +1,6 @@
 {
   "siteTitle": "English practice with Mr. Beldi",
+  "repo": "mobeldino/mobeldino.github.io",
   "levels": [
     {
       "id": "unlock-1",
@@ -12,21 +13,7 @@
             {
               "id": "unit-1",
               "title": "Unit 1",
-              "lessons": [
-                {
-                  "id": "lesson-1",
-                  "title": "Lesson 1",
-                  "note": "Subjects and verbs",
-                  "html": "units/unit-1/lesson-1/worksheet.html",
-                  "pdf": "units/unit-1/lesson-1/worksheet.pdf"
-                },
-                {
-                  "id": "lesson-2",
-                  "title": "Lesson 2",
-                  "html": "units/unit-1/lesson-2/worksheet.html",
-                  "pdf": "units/unit-1/lesson-2/worksheet.pdf"
-                }
-              ]
+              "lessons": []
             },
             {
               "id": "unit-2",

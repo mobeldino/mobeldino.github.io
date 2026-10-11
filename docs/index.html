@@ -266,6 +266,13 @@ const isGenericUnit=(un,i)=>new RegExp('^unit\\s*'+i+'$','i').test((un.title||''
 async function load(){
   try{ DATA=await (await fetch('content.json',{cache:'no-store'})).json(); }
   catch(e){ app.innerHTML='<p class="empty">The lesson list couldn’t be loaded. Check content.json for a missing comma or quote.</p>'; return; }
+  let FILES={};
+  try{ const r=await fetch('files.json',{cache:'no-store'}); if(r.ok) FILES=await r.json(); }catch(e){}
+  (DATA.levels||[]).forEach(lv=>(lv.books||[]).forEach(bk=>(bk.units||[]).forEach(un=>{
+    const found=FILES[`${lv.id}/${bk.id}/${un.id}`]||[];
+    const have=new Set((un.lessons||[]).map(l=>l.id));
+    un.lessons=(un.lessons||[]).concat(found.filter(f=>!have.has(f.id)));
+  })));
   document.getElementById('siteTitle').textContent=DATA.siteTitle||'';
   document.title=DATA.siteTitle||'Unlock Practice';
   route();
@@ -349,6 +356,8 @@ function unitPage(lv,bk,un){
       <span class="lab">${esc(l.title)}${ok&&l.note?`<em>${esc(l.note)}</em>`:''}</span><span class="lead"></span>
       <span class="st">${ok?(l.html?'<span class="pill">Online</span>':'')+(l.pdf?'<span class="pill">PDF</span>':''):'coming soon'}</span></a></li>`;}).join('')+`</ol>`
     : `<p class="empty">No worksheets for this unit yet. Check back after class.</p>`;
+  const repo=DATA.repo||'mobeldino/mobeldino.github.io';
+  html+=`<div class="tbar"><a class="tool fill teacher-only" href="https://github.com/${repo}/upload/main/docs/units/${esc(lv.id)}/${esc(bk.id)}/${esc(un.id)}" target="_blank" rel="noopener">Upload files to this unit</a></div>`;
   html+=qrPanel(`/${lv.id}/${bk.id}/${un.id}`,`${lv.title} – ${bk.title} – Unit ${i}`,`Unit ${i}${named?': '+un.title:''}`,`${lv.title} – ${bk.title}`);
   app.innerHTML=html;
 }
