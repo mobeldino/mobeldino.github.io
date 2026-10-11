@@ -6,144 +6,228 @@
 <title>Unlock Practice</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,500..800&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Monsieur+La+Doulaise&display=swap" rel="stylesheet">
 <script src="assets/qrcode.js"></script>
 <style>
 :root{
-  --paper:#F4F6FB; --surface:#FFFFFF; --ink:#17203A; --muted:#5A6378; --line:#DDE2EE;
-  --l1:#D9480F; --l2:#0B7A75; --l3:#5B3CC4; --l4:#C2185B;
-  --lv:var(--l1); --sig:#7B3FB8;
-  --display:"Bricolage Grotesque", system-ui, sans-serif;
+  /* reading room */
+  --room:#16302A; --room-2:#1E3F37;
+  --brass:#C9A04A; --brass-lt:#E9CF86; --brass-dk:#9C7630;
+  /* page */
+  --paper:#FBF8F1; --ink:#1F2B28; --muted:#5E6A66; --rule:#E3DCCB; --rule-2:#C9BFA8;
+  /* cloth, one per level */
+  --l1:#7A2433; --l2:#1F3A6B; --l3:#7A4614; --l4:#57305E;
+  --lv:var(--l1);
+  --sig:#B48BE6;
+  --display:"Cormorant Garamond", Georgia, serif;
   --body:"Atkinson Hyperlegible", system-ui, sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --paper:#10162A; --surface:#182038; --ink:#EEF1F8; --muted:#A3ABC0; --line:#2A3452;
-    --l1:#F26B3A; --l2:#22A39C; --l3:#8B6DF0; --l4:#E64A85; --sig:#B48BE6;
+    --room:#0E1F1B; --room-2:#15302A;
+    --paper:#1B2422; --ink:#EEE7D7; --muted:#A9B2AD; --rule:#2F3B37; --rule-2:#44524D;
+    --l1:#9A3446; --l2:#3A5A94; --l3:#96601F; --l4:#7A4A82;
   }
 }
 :root[data-theme="dark"]{
-  --paper:#10162A; --surface:#182038; --ink:#EEF1F8; --muted:#A3ABC0; --line:#2A3452;
-  --l1:#F26B3A; --l2:#22A39C; --l3:#8B6DF0; --l4:#E64A85; --sig:#B48BE6;
+  --room:#0E1F1B; --room-2:#15302A;
+  --paper:#1B2422; --ink:#EEE7D7; --muted:#A9B2AD; --rule:#2F3B37; --rule-2:#44524D;
+  --l1:#9A3446; --l2:#3A5A94; --l3:#96601F; --l4:#7A4A82;
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font:17px/1.55 var(--body);min-height:100vh;padding-bottom:64px;-webkit-font-smoothing:antialiased}
+body{
+  min-height:100vh;padding-bottom:70px;color:var(--ink);font:17px/1.6 var(--body);-webkit-font-smoothing:antialiased;
+  background:
+    radial-gradient(120% 60% at 50% -10%, var(--room-2) 0%, transparent 60%),
+    var(--room);
+}
 a{color:inherit}
-:focus-visible{outline:3px solid var(--lv);outline-offset:3px;border-radius:6px}
-.wrap{max-width:880px;margin:0 auto;padding:22px 16px}
+:focus-visible{outline:3px solid var(--brass);outline-offset:3px;border-radius:6px}
+.wrap{max-width:900px;margin:0 auto;padding:22px 16px 0}
 
-/* top: wordmark + level numerals */
-.top{display:flex;align-items:flex-end;flex-wrap:wrap;gap:6px 18px;margin-bottom:28px}
-.brand{font:800 clamp(44px,11vw,76px)/.85 var(--display);font-variation-settings:"wdth" 80;letter-spacing:-.03em;margin:0;text-decoration:none;color:var(--ink)}
-.levels{display:flex;gap:8px;flex:1;min-width:250px}
-.levels a{flex:1;max-width:84px;aspect-ratio:1/1.08;display:grid;place-items:center;border-radius:14px;text-decoration:none;
-  font:800 clamp(34px,9vw,56px)/1 var(--display);font-variation-settings:"wdth" 75;color:var(--c);
-  background:var(--surface);border:2px solid color-mix(in srgb,var(--c) 35%,transparent);transition:transform .15s,background .15s}
-.levels a:hover{transform:translateY(-2px)}
-.levels a.on{background:var(--c);color:#fff;border-color:var(--c);box-shadow:0 10px 22px -10px var(--c)}
+/* ---------- masthead ---------- */
+.mast{display:grid;grid-template-columns:auto 1fr;align-items:center;gap:4px 14px;color:var(--paper)}
+.emblem{width:54px;height:54px;color:var(--brass)}
+.brand{font:700 clamp(46px,12vw,72px)/.9 var(--display);letter-spacing:.01em;text-decoration:none;color:#FBF8F1}
+.tagline{grid-column:1/-1;font:italic 500 1.2rem/1.3 var(--display);color:var(--brass-lt);margin:2px 0 0}
+.levels{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 26px}
+.levels a{
+  position:relative;height:66px;display:flex;align-items:center;justify-content:center;padding-left:16px;
+  text-decoration:none;color:var(--brass-lt);background:rgba(233,207,134,.08);
+  clip-path:polygon(20px 0,100% 0,100% 100%,20px 100%,0 50%);transition:background .2s,transform .2s;
+}
+.levels a::before{content:"";position:absolute;left:14px;top:50%;width:10px;height:10px;margin-top:-5px;border-radius:50%;background:var(--room);box-shadow:0 0 0 2px var(--brass)}
+.levels a span{font:700 1rem/1 var(--body);letter-spacing:.02em;opacity:.8;margin-right:6px}
+.levels a b{font:700 2.3rem/1 var(--display)}
+.levels a:hover{background:rgba(233,207,134,.16)}
+.levels a.on{background:var(--c);color:#FBF8F1;transform:translateY(-2px)}
+.levels a.on b{color:var(--brass-lt)}
 .levels a[data-l="1"]{--c:var(--l1)} .levels a[data-l="2"]{--c:var(--l2)}
 .levels a[data-l="3"]{--c:var(--l3)} .levels a[data-l="4"]{--c:var(--l4)}
-.who{width:100%;display:flex;justify-content:space-between;align-items:center;gap:10px;color:var(--muted);font-size:.95rem;margin-top:6px}
-.tool{border:1.5px solid var(--line);background:var(--surface);color:var(--ink);border-radius:10px;padding:7px 12px;font:700 .88rem var(--body);cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
-.tool.fill{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+@media (max-width:480px){ .levels a span{display:none} .levels a{padding-left:20px} }
+
+/* ---------- the page ---------- */
+.page{
+  background:var(--paper);border-radius:22px;padding:clamp(20px,5vw,40px);position:relative;
+  box-shadow:0 1px 0 var(--brass-dk) inset,0 40px 70px -40px rgba(0,0,0,.7);
+}
+.page-h{font:700 clamp(30px,7vw,42px)/1.05 var(--display);margin:0}
+.page-sub{font:italic 500 1.2rem var(--display);color:var(--muted);margin:2px 0 22px}
+
+/* ---------- clothbound covers ---------- */
+.shelf{display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,4vw,34px);max-width:520px;position:relative;padding-bottom:18px}
+.shelf::after{content:"";position:absolute;left:-10px;right:-10px;bottom:0;height:12px;border-radius:3px;
+  background:linear-gradient(180deg,#A07B48,#6E4F28);box-shadow:0 10px 18px -8px rgba(60,40,10,.6)}
+.bookwrap{text-decoration:none;display:block;position:relative;z-index:1}
+.cloth{
+  --tex:repeating-linear-gradient(0deg,rgba(255,255,255,.045) 0 1px,transparent 1px 3px),repeating-linear-gradient(90deg,rgba(0,0,0,.07) 0 1px,transparent 1px 3px);
+  background:var(--tex),linear-gradient(160deg,color-mix(in srgb,var(--lv) 88%,#fff) 0%,var(--lv) 45%,color-mix(in srgb,var(--lv) 75%,#000) 100%);
+}
+.cover{
+  position:relative;aspect-ratio:3/4.1;border-radius:3px 10px 10px 3px;color:var(--brass-lt);overflow:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:8px;padding:18% 12% 14% 16%;
+  box-shadow:inset 10px 0 0 rgba(0,0,0,.25),inset 12px 0 0 rgba(255,255,255,.12),0 16px 26px -14px rgba(0,0,0,.6);
+  transition:transform .3s cubic-bezier(.2,.8,.2,1);
+}
+.cover::before{content:"";position:absolute;inset:7% 7% 7% 11%;border:1.5px solid rgba(233,207,134,.75);border-radius:2px;
+  box-shadow:inset 0 0 0 4px transparent,inset 0 0 0 5px rgba(233,207,134,.45);pointer-events:none}
+.bookwrap:hover .cover,.bookwrap:focus-visible .cover{transform:translateY(-6px)}
+.foil{background:linear-gradient(180deg,#F3DE9C 0%,#D4AE57 55%,#A9802F 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+.cover svg{width:28%;max-width:58px;color:var(--brass-lt);opacity:.95}
+.c-title{font:700 clamp(19px,5vw,30px)/1.05 var(--display);margin:0}
+.c-level{font:italic 600 clamp(13px,3.2vw,17px)/1 var(--display);color:var(--brass-lt);opacity:.9}
+.c-meta{position:absolute;bottom:10%;left:0;right:0;padding-left:4%;font:600 .78rem/1 var(--body);letter-spacing:.04em;color:var(--brass-lt);opacity:.85}
+.cover.photo{padding:0;background:#ccc}
+.cover.photo::before{display:none}
+.cover.photo img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.caption{display:block;margin-top:10px;font:600 1.15rem/1.2 var(--display);color:var(--ink)}
+.caption small{display:block;font:400 .85rem var(--body);color:var(--muted)}
+
+/* ---------- chapter band ---------- */
+.band{position:relative;border-radius:14px;color:#FBF8F1;padding:18px 20px 20px;margin:-4px 0 22px;overflow:hidden}
+.band::after{content:"";position:absolute;inset:6px;border:1px solid rgba(233,207,134,.45);border-radius:9px;pointer-events:none}
+.band > *{position:relative;z-index:1}
+.crumb{margin:0 0 4px;font:italic 500 1.1rem var(--display);color:var(--brass-lt)}
+.crumb a{text-decoration:none;border-bottom:1px solid rgba(233,207,134,.5)}
+.crumb a:hover{border-bottom-color:var(--brass-lt)}
+.crumb i{font-style:normal;opacity:.6;margin:0 6px}
+.band h1{font:700 clamp(30px,7.5vw,46px)/1.02 var(--display);margin:0}
+.band .mark{position:absolute;right:18px;top:50%;width:64px;height:64px;margin-top:-32px;color:var(--brass-lt);opacity:.35}
+.band .thumb{position:absolute;right:18px;top:50%;width:60px;aspect-ratio:3/4;object-fit:cover;transform:translateY(-50%) rotate(3deg);border-radius:2px 6px 6px 2px;box-shadow:0 8px 16px -6px rgba(0,0,0,.6);z-index:1}
+.opener{display:flex;align-items:flex-end;gap:12px}
+.opener .num{font:700 clamp(80px,22vw,128px)/.72 var(--display);color:var(--brass-lt)}
+.opener h1{padding-bottom:.06em}
+
+/* ---------- table of contents ---------- */
+.toc-h{font:italic 600 1.35rem var(--display);color:var(--muted);margin:0 0 6px}
+.toc{list-style:none;margin:0;padding:0}
+.toc a{display:flex;align-items:baseline;gap:10px;padding:15px 2px;text-decoration:none;border-bottom:1px solid var(--rule)}
+.toc li:first-child a{border-top:1px solid var(--rule)}
+.toc .lab{font:700 1.45rem/1.15 var(--display);color:var(--ink)}
+.toc .lab em{display:block;font:italic 500 1.05rem var(--display);color:var(--muted)}
+.toc .lead{flex:1;min-width:16px;border-bottom:2px dotted var(--rule-2);transform:translateY(-.3em)}
+.toc .st{font-size:.9rem;color:var(--lv);font-weight:700;white-space:nowrap}
+.toc a:hover .lab{color:var(--lv)}
+.toc a:hover .lead{border-bottom-color:var(--lv)}
+.toc .soon .lab{color:var(--muted)}
+.toc .soon .st{color:var(--muted);font-weight:400;font-style:italic}
+.pill{display:inline-block;font:700 .72rem/1 var(--body);padding:5px 8px;border-radius:20px;border:1.5px solid currentColor;margin-left:4px}
+.empty{border:1.5px dashed var(--rule-2);border-radius:14px;padding:26px 20px;color:var(--muted);text-align:center;font:italic 500 1.2rem var(--display)}
+
+/* ---------- lesson actions ---------- */
+.note{font:italic 500 1.25rem var(--display);color:var(--muted);margin:-6px 0 18px}
+.actions{display:grid;gap:12px;margin-bottom:16px}
+.act{display:flex;align-items:center;gap:16px;padding:18px 20px;border-radius:14px;text-decoration:none;font:700 1.12rem/1.2 var(--body)}
+.act svg{flex:none;width:30px;height:30px}
+.act small{display:block;font-weight:400;font-size:.88rem;opacity:.8;margin-top:3px}
+.act.primary{color:#FBF8F1}
+.act.primary svg{color:var(--brass-lt)}
+.act.secondary{border:2px solid var(--lv);color:var(--ink);background:transparent}
+.act.secondary svg{color:var(--lv)}
+.act:hover{transform:translateY(-1px)}
+.dl{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:.95rem}
+.dl a{font-weight:700;color:var(--lv);text-underline-offset:4px}
+
+/* ---------- teacher tools ---------- */
+.tool{border:1.5px solid var(--brass);background:transparent;color:var(--brass-dk);border-radius:30px;padding:7px 14px;font:700 .85rem var(--body);cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
+.tool.fill{background:var(--brass);color:#1F2B28}
+.mast .tool{color:var(--brass-lt)}
+.qrpanel{display:none}
+body.teacher .qrpanel{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:26px;padding:16px;border:1.5px solid var(--brass);border-radius:16px;background:color-mix(in srgb,var(--brass) 7%,transparent)}
+.qrpanel .qrimg{background:#fff;border-radius:10px;padding:6px;width:132px;flex:none}
+.qrpanel .qrimg svg{display:block;width:100%;height:auto}
+.qrpanel .qrtxt{flex:1;min-width:190px}
+.qrpanel h3{font:700 1.35rem/1.15 var(--display);margin:0 0 2px}
+.qrpanel p{margin:0 0 12px;color:var(--muted);font-size:.9rem}
+.qrpanel .row{justify-content:flex-start;margin:0}
+#present{position:fixed;inset:0;z-index:50;display:none;flex-direction:column;align-items:center;justify-content:center;gap:2vh;padding:3vh 4vw;text-align:center;color:#FBF8F1;cursor:pointer;
+  background:radial-gradient(90% 70% at 50% 30%,#1E3F37 0%,#0E1F1B 100%)}
+#present.on{display:flex}
+#present .pt{font:700 clamp(28px,5vw,64px)/1.05 "Cormorant Garamond",Georgia,serif;margin:0}
+#present .ps{font:italic 600 clamp(18px,2.6vw,32px) "Cormorant Garamond",Georgia,serif;color:#E9CF86;margin:0}
+#present .pq{background:#fff;border-radius:18px;padding:min(2vh,16px);width:min(64vh,82vw)}
+#present .pq svg{display:block;width:100%;height:auto}
+#present .pu{font:700 clamp(14px,1.8vw,22px) "Atkinson Hyperlegible",sans-serif;color:#E9CF86;letter-spacing:.02em;margin:0}
+#present .px{font-size:.9rem;opacity:.6;margin:0}
+.tbar{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
 .teacher-only{display:none!important} body.teacher .teacher-only{display:inline-flex!important}
+.mastbar{grid-column:1/-1;display:flex;justify-content:flex-end;margin-top:-4px}
 
-/* level view: two book covers */
-.lvl-h{font:700 1.5rem/1.2 var(--display);margin:0 0 4px}
-.lvl-sub{color:var(--muted);margin:0 0 20px}
-.shelf{max-width:640px;display:grid;grid-template-columns:1fr 1fr;gap:clamp(14px,4vw,32px);padding-bottom:22px;border-bottom:10px solid color-mix(in srgb,var(--lv) 22%,var(--line));border-radius:0 0 4px 4px}
-.bookwrap{text-decoration:none;display:block}
-.book{position:relative;aspect-ratio:3/4;border-radius:4px 12px 12px 4px;background:var(--lv);color:#fff;overflow:hidden;
-  padding:clamp(14px,4vw,24px) clamp(14px,4vw,22px) clamp(14px,4vw,22px) clamp(24px,6vw,36px);display:flex;flex-direction:column;justify-content:space-between;
-  box-shadow:inset 9px 0 0 rgba(0,0,0,.22),inset 11px 0 0 rgba(255,255,255,.18),0 18px 30px -16px color-mix(in srgb,var(--lv) 80%,#000);
-  transition:transform .25s cubic-bezier(.2,.8,.2,1)}
-.bookwrap:hover .book,.bookwrap:focus-visible .book{transform:translateY(-6px) rotate(-1deg)}
-.rw::before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(180deg,transparent 0 21px,rgba(255,255,255,.16) 21px 22px);pointer-events:none}
-.ls::before{content:"";position:absolute;left:0;right:0;bottom:16%;height:36%;pointer-events:none;opacity:.22;
-  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 40'%3E%3Cg fill='white'%3E%3Crect x='2' y='17' width='4' height='6' rx='2'/%3E%3Crect x='10' y='12' width='4' height='16' rx='2'/%3E%3Crect x='18' y='6' width='4' height='28' rx='2'/%3E%3Crect x='26' y='14' width='4' height='12' rx='2'/%3E%3Crect x='34' y='2' width='4' height='36' rx='2'/%3E%3Crect x='42' y='10' width='4' height='20' rx='2'/%3E%3Crect x='50' y='16' width='4' height='8' rx='2'/%3E%3Crect x='58' y='8' width='4' height='24' rx='2'/%3E%3Crect x='66' y='4' width='4' height='32' rx='2'/%3E%3Crect x='74' y='13' width='4' height='14' rx='2'/%3E%3Crect x='82' y='9' width='4' height='22' rx='2'/%3E%3Crect x='90' y='15' width='4' height='10' rx='2'/%3E%3Crect x='98' y='5' width='4' height='30' rx='2'/%3E%3Crect x='106' y='12' width='4' height='16' rx='2'/%3E%3Crect x='114' y='17' width='4' height='6' rx='2'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat}
-.book.ls,.bandhead.ls{background:color-mix(in srgb,var(--lv) 68%,#101830)}
-.book .lvlno{position:relative;font:800 clamp(15px,3.6vw,19px)/1 var(--display);opacity:.9}
-.book .ttl{position:relative;font:800 clamp(21px,5.6vw,34px)/1.02 var(--display);font-variation-settings:"wdth" 85;letter-spacing:-.01em;margin:0}
-.book .cnt{position:relative;font-size:.85rem;opacity:.92}
-
-/* book + lesson header band */
-.bandhead{background:var(--lv);color:#fff;border-radius:16px;padding:20px 20px 22px;position:relative;overflow:hidden;margin-bottom:20px}
-.bandhead.ls::before{left:auto;right:0;width:60%;top:15%;bottom:auto;height:70%}
-.bandhead > *{position:relative}
-.crumb{font-size:.95rem;opacity:.95;margin:0 0 6px}
-.crumb a{color:#fff;text-underline-offset:3px}
-.bandhead h1{font:800 clamp(30px,7vw,44px)/1.02 var(--display);font-variation-settings:"wdth" 85;margin:0}
-
-/* lesson list */
-.lessons{list-style:none;margin:0;padding:0;background:var(--surface);border-radius:16px;border:1.5px solid var(--line);overflow:hidden}
-.lessons li + li{border-top:1.5px solid var(--line)}
-.lessons a{display:grid;grid-template-columns:56px 1fr auto;align-items:center;gap:12px;padding:14px 16px;text-decoration:none}
-.lessons a:hover{background:color-mix(in srgb,var(--lv) 7%,transparent)}
-.lessons .n{font:800 34px/1 var(--display);font-variation-settings:"wdth" 75;color:var(--lv);text-align:center}
-.lessons .t{font-weight:700}
-.lessons .m{display:block;font-weight:400;color:var(--muted);font-size:.9rem}
-.lessons .soon .n{color:var(--muted);opacity:.6}
-.fmt{display:flex;gap:6px}
-.fmt span{font:700 .72rem/1 var(--body);padding:5px 7px;border-radius:6px;background:color-mix(in srgb,var(--lv) 12%,transparent);color:var(--lv)}
-.empty{background:var(--surface);border:1.5px dashed var(--line);border-radius:16px;padding:28px 20px;color:var(--muted);text-align:center}
-
-/* lesson view */
-.lessonhead{display:flex;align-items:flex-end;gap:16px}
-.lessonhead.generic{flex-direction:row-reverse;justify-content:flex-end;gap:10px}
-.lessonhead.generic h1{padding-bottom:.08em}
-.bignum{font:800 clamp(84px,22vw,140px)/.78 var(--display);font-variation-settings:"wdth" 75;letter-spacing:-.04em}
-.actions{display:grid;gap:12px;margin:4px 0 18px}
-.act{display:flex;align-items:center;gap:14px;padding:18px;border-radius:14px;text-decoration:none;font:700 1.12rem/1.2 var(--body);border:2px solid var(--ink)}
-.act.primary{background:var(--ink);color:var(--paper)}
-.act.secondary{background:var(--surface);color:var(--ink)}
-.act small{display:block;font-weight:400;font-size:.88rem;opacity:.75;margin-top:3px}
-.act svg{flex:none;width:28px;height:28px}
-.dl{display:flex;flex-wrap:wrap;gap:8px 18px;color:var(--muted);font-size:.95rem}
-.dl a{color:var(--ink);font-weight:700;text-underline-offset:3px}
-.tbar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0}
-
-/* QR */
-.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:14px;margin-bottom:24px}
-.qr-card{background:#fff;color:#17203A;border:1.5px solid #DDE2EE;border-top:8px solid var(--c,#17203A);border-radius:12px;padding:12px;text-align:center;break-inside:avoid}
-.qr-card svg{width:100%;max-width:170px;height:auto}
-.qr-card .t{font:800 1.05rem/1.2 var(--display)}
-.qr-card .s{font-size:.82rem;color:#5A6378}
-.qr-h{font:800 1.3rem var(--display);margin:22px 0 10px;color:var(--c)}
-dialog{border:none;border-radius:18px;padding:20px;max-width:380px;width:92vw;background:var(--surface);color:var(--ink)}
-dialog::backdrop{background:rgba(10,14,30,.55)}
+/* ---------- QR ---------- */
+.qr-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:14px;margin-bottom:24px}
+.qr-card{background:#fff;color:#1F2B28;border:1px solid #E3DCCB;border-top:8px solid var(--c,#1F2B28);border-radius:10px;padding:12px;text-align:center;break-inside:avoid}
+.qr-card svg{width:100%;max-width:160px;height:auto}
+.qr-card .t{font:700 1.15rem/1.15 "Cormorant Garamond",serif}
+.qr-card .s{font-size:.8rem;color:#5E6A66}
+.qr-h{font:700 1.5rem var(--display);margin:22px 0 10px;color:var(--c)}
+dialog{border:none;border-radius:18px;padding:20px;max-width:380px;width:92vw;background:var(--paper);color:var(--ink)}
+dialog::backdrop{background:rgba(8,18,15,.6)}
 .big-qr{background:#fff;border-radius:12px;padding:14px}
 .big-qr svg{width:100%;height:auto;display:block}
 .row{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-top:12px}
 
-.sig{position:fixed;right:14px;bottom:6px;font:1.7rem "Monsieur La Doulaise",cursive;color:var(--sig);pointer-events:none}
-@media (max-width:420px){ .lessons a{grid-template-columns:44px 1fr auto;padding:13px 12px} .lessons .n{font-size:30px} }
+.sig{position:fixed;right:14px;bottom:6px;font:1.75rem "Monsieur La Doulaise",cursive;color:var(--sig);pointer-events:none;text-shadow:0 1px 6px rgba(0,0,0,.35)}
 @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
 @media print{
   body{background:#fff;padding:0} .noprint{display:none!important}
-  .qr-grid{grid-template-columns:repeat(3,1fr)} .sig{color:#7B3FB8}
+  .page{box-shadow:none;padding:0;background:#fff;color:#1F2B28}
+  .qr-grid{grid-template-columns:repeat(3,1fr)} .sig{color:#7B3FB8;text-shadow:none}
 }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top noprint">
-    <a class="brand" href="#/">Unlock</a>
+  <header class="noprint">
+    <div class="mast">
+      <svg class="emblem" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <circle cx="20" cy="22" r="11"/><circle cx="20" cy="22" r="4.5"/>
+        <path d="M28 30 50 52"/><path d="M42 44l5-5"/><path d="M47 49l5-5"/><path d="M36 38l4-4"/>
+      </svg>
+      <a class="brand" href="#/">Unlock</a>
+      <p class="tagline" id="siteTitle"></p>
+      <div class="mastbar"><a class="tool teacher-only" href="#/qr">QR codes</a></div>
+    </div>
     <nav class="levels" id="levels" aria-label="Levels"></nav>
-    <div class="who"><span id="siteTitle"></span><a class="tool teacher-only" href="#/qr">QR codes</a></div>
   </header>
-  <main id="app"><p class="empty">Loading…</p></main>
+  <main class="page" id="app"><p class="empty">Opening the library…</p></main>
 </div>
 
 <dialog id="qrDlg">
   <div class="big-qr" id="qrBox"></div>
-  <p style="text-align:center;font-weight:700;margin:12px 0 0" id="qrTitle"></p>
+  <p style="text-align:center;font:700 1.2rem 'Cormorant Garamond',serif;margin:12px 0 0" id="qrTitle"></p>
   <div class="row">
     <button class="tool fill" id="qrPng">Download QR</button>
     <button class="tool" id="qrCopy">Copy link</button>
     <button class="tool" id="qrClose">Close</button>
   </div>
 </dialog>
+
+<div id="present" role="dialog" aria-modal="true" aria-label="QR code for the class">
+  <p class="ps" id="pSub"></p><h2 class="pt" id="pTitle"></h2>
+  <div class="pq" id="pQr"></div>
+  <p class="pu" id="pUrl"></p><p class="px">Tap anywhere or press Esc to close</p>
+</div>
 
 <div class="sig">Mohamed Beldi</div>
 
@@ -155,8 +239,14 @@ try{
   if(localStorage.getItem('teacher')==='1') document.body.classList.add('teacher');
 }catch(e){ if(params.has('teacher')) document.body.classList.add('teacher'); }
 
-const ICON_PLAY='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>';
-const ICON_PDF='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>';
+const SVG={
+  nib:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M24 4 36 20 30 40H18L12 20Z"/><path d="M24 4v20"/><circle cx="24" cy="26" r="2.6"/><path d="M16 44h16"/></svg>',
+  phones:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 30v-6a16 16 0 0 1 32 0v6"/><rect x="6" y="28" width="9" height="14" rx="3"/><rect x="33" y="28" width="9" height="14" rx="3"/></svg>',
+  book:'<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10c6-2 12-2 18 2 6-4 12-4 18-2v28c-6-2-12-2-18 2-6-4-12-4-18-2Z"/><path d="M24 12v28"/></svg>',
+  pen:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>',
+  pdf:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8Z"/><path d="M14 2v6h6"/><path d="M8 13h8M8 17h5"/></svg>'
+};
+const emblemFor=b=>({rw:SVG.nib,ls:SVG.phones})[b.style||b.id]||SVG.book;
 
 let DATA=null;
 const app=document.getElementById('app');
@@ -165,10 +255,13 @@ const baseUrl=()=>location.origin+location.pathname.replace(/index\.html$/,'');
 const linkFor=h=>baseUrl()+'#'+h;
 const lvIndex=lv=>DATA.levels.indexOf(lv)+1;
 const colorVar=i=>`var(--l${((i-1)%4)+1})`;
-function setLevelColor(i){ document.documentElement.style.setProperty('--lv', i?colorVar(i):'var(--ink)'); }
+function setLevelColor(i){ document.documentElement.style.setProperty('--lv', i?colorVar(i):'var(--room-2)'); }
 function qrSvg(t,cell=5){const q=qrcode(0,'M');q.addData(t);q.make();return q.createSvgTag({cellSize:cell,margin:2,scalable:true});}
 const plural=(n,w)=>`${n} ${w}${n===1?'':'s'}`;
 const ready=l=>l.html||l.pdf;
+const allLessons=bk=>(bk.units||[]).flatMap(u=>u.lessons||[]);
+const unitNo=(bk,un)=>(bk.units||[]).indexOf(un)+1;
+const isGenericUnit=(un,i)=>new RegExp('^unit\\s*'+i+'$','i').test((un.title||'').trim());
 
 async function load(){
   try{ DATA=await (await fetch('content.json',{cache:'no-store'})).json(); }
@@ -179,15 +272,17 @@ async function load(){
 }
 
 function renderLevels(activeId){
-  document.getElementById('levels').innerHTML=DATA.levels.map((lv,i)=>
-    `<a href="#/${esc(lv.id)}" data-l="${(i%4)+1}" class="${lv.id===activeId?'on':''}" aria-label="${esc(lv.title)}" ${lv.id===activeId?'aria-current="page"':''}>${i+1}</a>`).join('');
+  document.getElementById('levels').innerHTML=DATA.levels.map((lv,i)=>{
+    const on=lv.id===activeId, word=(lv.title||'').replace(/\s*\d+\s*$/,'');
+    return `<a href="#/${esc(lv.id)}" data-l="${(i%4)+1}" class="${on?'on':''}" aria-label="${esc(lv.title)}" ${on?'aria-current="page"':''}><span>${esc(word)}</span><b>${i+1}</b></a>`;
+  }).join('');
 }
 
 function route(){
   if(!DATA) return;
   const parts=decodeURIComponent(location.hash.replace(/^#\/?/,'')).split('/').filter(Boolean);
   window.scrollTo(0,0);
-  if(parts[0]==='qr'){ renderLevels(''); setLevelColor(0); return qrPage(parts[1]); }
+  if(parts[0]==='qr'){ renderLevels(''); setLevelColor(0); return qrPage(parts[1],parts[2]); }
   let lvId=parts[0];
   if(!lvId){ try{ lvId=localStorage.getItem('lastLevel'); }catch(e){} }
   const lv=DATA.levels.find(x=>x.id===lvId)||DATA.levels[0];
@@ -198,79 +293,132 @@ function route(){
   if(!parts[1]) return levelPage(lv);
   const bk=(lv.books||[]).find(b=>b.id===parts[1]); if(!bk) return notFound();
   if(!parts[2]) return bookPage(lv,bk);
-  const li=(bk.lessons||[]).findIndex(l=>l.id===parts[2]); if(li<0) return notFound();
-  lessonPage(lv,bk,bk.lessons[li],li+1);
+  const un=(bk.units||[]).find(u=>u.id===parts[2]); if(!un) return notFound();
+  if(!parts[3]) return unitPage(lv,bk,un);
+  const li=(un.lessons||[]).findIndex(l=>l.id===parts[3]); if(li<0) return notFound();
+  lessonPage(lv,bk,un,un.lessons[li],li+1);
 }
 
 function levelPage(lv){
   const books=lv.books||[];
-  app.innerHTML=`<h2 class="lvl-h">${esc(lv.title)}</h2><p class="lvl-sub">Choose your book.</p>
+  app.innerHTML=`<h2 class="page-h">${esc(lv.title)}</h2><p class="page-sub">Choose your book.</p>
   <div class="shelf">`+books.map(b=>{
-    const n=(b.lessons||[]).filter(ready).length;
+    const n=allLessons(b).filter(ready).length, units=(b.units||[]).length;
+    const status=n?plural(n,'worksheet')+' ready':'Worksheets coming soon';
     return `<a class="bookwrap" href="#/${esc(lv.id)}/${esc(b.id)}">
-      <div class="book ${esc(b.style||b.id)}">
-        <span class="lvlno">${esc(lv.title)}</span>
-        <h3 class="ttl">${esc(b.title)}</h3>
-        <span class="cnt">${n?plural(n,'lesson'):'Lessons coming soon'}</span>
-      </div></a>`;}).join('')+`</div>`;
+      ${b.cover
+        ? `<div class="cover photo"><img src="${esc(b.cover)}" alt="${esc(lv.title+' '+b.title)} cover"></div>`
+        : `<div class="cover cloth">${emblemFor(b)}
+             <h3 class="c-title foil">${esc(b.title)}</h3>
+             <span class="c-level">${esc(lv.title)}</span>
+             ${units?`<span class="c-meta">${plural(units,'unit')}</span>`:''}</div>`}
+      <span class="caption">${b.cover?esc(b.title):''}<small>${status}</small></span></a>`;}).join('')+`</div>`;
+}
+
+function band(bk,crumbs,inner){
+  const right=bk.cover?`<img class="thumb" src="${esc(bk.cover)}" alt="">`:`<span class="mark">${emblemFor(bk)}</span>`;
+  return `<section class="band cloth">${right}
+    <p class="crumb">${crumbs.map(c=>`<a href="#${esc(c.h)}">${esc(c.t)}</a>`).join('<i>/</i>')}</p>${inner}</section>`;
 }
 
 function bookPage(lv,bk){
-  const ls=bk.lessons||[];
-  let html=`<section class="bandhead ${esc(bk.style||bk.id)}">
-    <p class="crumb"><a href="#/${esc(lv.id)}">${esc(lv.title)}</a></p>
-    <h1>${esc(bk.title)}</h1></section>`;
-  html+= ls.length ? `<ol class="lessons">`+ls.map((l,i)=>{
-    const ok=ready(l);
-    return `<li class="${ok?'':'soon'}"><a href="#/${esc(lv.id)}/${esc(bk.id)}/${esc(l.id)}">
-      <span class="n">${i+1}</span>
-      <span class="t">${esc(l.title)}<span class="m">${ok?esc(l.note||''):'Coming soon'}</span></span>
-      <span class="fmt">${l.html?'<span>Online</span>':''}${l.pdf?'<span>PDF</span>':''}</span></a></li>`;}).join('')+`</ol>`
-    : `<p class="empty">No lessons in this book yet.</p>`;
+  const us=bk.units||[];
+  let html=band(bk,[{t:lv.title,h:'/'+lv.id}],`<h1>${esc(bk.title)}</h1>`);
+  html+=`<h2 class="toc-h">Contents</h2>`;
+  html+= us.length ? `<ol class="toc">`+us.map((u,i)=>{
+    const n=(u.lessons||[]).filter(ready).length, named=!isGenericUnit(u,i+1);
+    return `<li><a class="${n?'':'soon'}" href="#/${esc(lv.id)}/${esc(bk.id)}/${esc(u.id)}">
+      <span class="lab">Unit ${i+1}${named?`<em>${esc(u.title)}</em>`:''}</span><span class="lead"></span>
+      <span class="st">${n?plural(n,'worksheet'):'coming soon'}</span></a></li>`;}).join('')+`</ol>`
+    : `<p class="empty">No units in this book yet.</p>`;
   html+=`<div class="tbar">
-    <a class="tool teacher-only" href="#/qr/${esc(lv.id)}">Print QR codes for ${esc(lv.title)}</a>
-    <button class="tool teacher-only" data-qr="/${esc(lv.id)}/${esc(bk.id)}" data-title="${esc(lv.title+' – '+bk.title)}">QR for this book</button></div>`;
+    <a class="tool teacher-only" href="#/qr/${esc(lv.id)}/${esc(bk.id)}">Print QR codes for this book</a>
+    </div>`+qrPanel(`/${lv.id}/${bk.id}`,`${lv.title} – ${bk.title}`,bk.title,lv.title);
   app.innerHTML=html;
 }
 
-function lessonPage(lv,bk,l,num){
-  const fn=p=>p.split('/').pop();
-  let html=`<section class="bandhead ${esc(bk.style||bk.id)}">
-    <p class="crumb"><a href="#/${esc(lv.id)}">${esc(lv.title)}</a> &nbsp;/&nbsp; <a href="#/${esc(lv.id)}/${esc(bk.id)}">${esc(bk.title)}</a></p>
-    <div class="lessonhead${/^lesson\s*\d+$/i.test(l.title.trim())?' generic':''}"><span class="bignum" aria-hidden="true">${num}</span>
-    ${/^lesson\s*\d+$/i.test(l.title.trim()) ? `<h1 aria-label="${esc(l.title)}">Lesson</h1>` : `<h1>${esc(l.title)}</h1>`}</div></section>`;
-  if(l.note) html+=`<p style="margin:-6px 0 16px;color:var(--muted)">${esc(l.note)}</p>`;
+function unitPage(lv,bk,un){
+  const i=unitNo(bk,un), ls=un.lessons||[], named=!isGenericUnit(un,i);
+  let html=band(bk,[{t:lv.title,h:'/'+lv.id},{t:bk.title,h:`/${lv.id}/${bk.id}`}],
+    `<div class="opener"><h1 aria-label="Unit ${i}">Unit</h1><span class="num" aria-hidden="true">${i}</span></div>`);
+  if(named) html+=`<p class="note">${esc(un.title)}</p>`;
+  html+=`<h2 class="toc-h">Worksheets</h2>`;
+  html+= ls.length ? `<ol class="toc">`+ls.map(l=>{
+    const ok=ready(l);
+    return `<li><a class="${ok?'':'soon'}" href="#/${esc(lv.id)}/${esc(bk.id)}/${esc(un.id)}/${esc(l.id)}">
+      <span class="lab">${esc(l.title)}${ok&&l.note?`<em>${esc(l.note)}</em>`:''}</span><span class="lead"></span>
+      <span class="st">${ok?(l.html?'<span class="pill">Online</span>':'')+(l.pdf?'<span class="pill">PDF</span>':''):'coming soon'}</span></a></li>`;}).join('')+`</ol>`
+    : `<p class="empty">No worksheets for this unit yet. Check back after class.</p>`;
+  html+=qrPanel(`/${lv.id}/${bk.id}/${un.id}`,`${lv.title} – ${bk.title} – Unit ${i}`,`Unit ${i}${named?': '+un.title:''}`,`${lv.title} – ${bk.title}`);
+  app.innerHTML=html;
+}
+
+function lessonPage(lv,bk,un,l,num){
+  const fn=p=>p.split('/').pop(), ui=unitNo(bk,un);
+  const generic=/^lesson\s*\d+$/i.test(l.title.trim());
+  let html=band(bk,[{t:lv.title,h:'/'+lv.id},{t:bk.title,h:`/${lv.id}/${bk.id}`},{t:'Unit '+ui,h:`/${lv.id}/${bk.id}/${un.id}`}],
+    generic?`<div class="opener"><h1 aria-label="${esc(l.title)}">Lesson</h1><span class="num" aria-hidden="true">${num}</span></div>`:`<h1>${esc(l.title)}</h1>`);
+  if(l.note) html+=`<p class="note">${esc(l.note)}</p>`;
   if(ready(l)){
     html+=`<div class="actions">`;
-    if(l.html) html+=`<a class="act primary" href="${esc(l.html)}">${ICON_PLAY}<span>Practice online<small>Do the exercises on your phone</small></span></a>`;
-    if(l.pdf) html+=`<a class="act secondary" href="${esc(l.pdf)}" target="_blank" rel="noopener">${ICON_PDF}<span>Open the PDF<small>View or print the worksheet</small></span></a>`;
+    if(l.html) html+=`<a class="act primary cloth" href="${esc(l.html)}">${SVG.pen}<span>Practice online<small>Do the exercises on your phone</small></span></a>`;
+    if(l.pdf) html+=`<a class="act secondary" href="${esc(l.pdf)}" target="_blank" rel="noopener">${SVG.pdf}<span>Open the PDF<small>View or print the worksheet</small></span></a>`;
     html+=`</div><div class="dl">`;
     if(l.html) html+=`<a href="${esc(l.html)}" download="${esc(fn(l.html))}">Download worksheet</a>`;
     if(l.pdf) html+=`<a href="${esc(l.pdf)}" download="${esc(fn(l.pdf))}">Download PDF</a>`;
     html+=`</div>`;
-  } else html+=`<p class="empty">This lesson isn’t ready yet. Check back after class.</p>`;
-  html+=`<div class="tbar"><button class="tool fill teacher-only" data-qr="/${esc(lv.id)}/${esc(bk.id)}/${esc(l.id)}" data-title="${esc(lv.title+' – '+bk.title+' – '+l.title)}">Show QR code</button></div>`;
+  } else html+=`<p class="empty">This worksheet isn’t ready yet. Check back after class.</p>`;
+  html+=qrPanel(`/${lv.id}/${bk.id}/${un.id}/${l.id}`,`${lv.title} – ${bk.title} – Unit ${ui} – ${l.title}`,l.title,`${lv.title} – ${bk.title} – Unit ${ui}`);
   app.innerHTML=html;
 }
 
-function qrPage(lvId){
+function qrPage(lvId,bkId){
   const levels=lvId?DATA.levels.filter(x=>x.id===lvId):DATA.levels;
   let html=`<div class="row noprint" style="justify-content:flex-start;margin-bottom:6px">
     <button class="tool fill" onclick="window.print()">Print or save as PDF</button>
     ${lvId?'<a class="tool" href="#/qr">All levels</a>':''}</div>`;
   levels.forEach(lv=>{
     const c=colorVar(lvIndex(lv));
-    (lv.books||[]).forEach(bk=>{
+    (lv.books||[]).filter(b=>!bkId||b.id===bkId).forEach(bk=>{
       html+=`<h3 class="qr-h" style="--c:${c}">${esc(lv.title)} – ${esc(bk.title)}</h3><div class="qr-grid">`;
-      html+=card(`/${lv.id}/${bk.id}`,bk.title,'All lessons',c);
-      (bk.lessons||[]).forEach(l=>html+=card(`/${lv.id}/${bk.id}/${l.id}`,l.title,`${lv.title} – ${bk.title}`,c));
+      html+=card(`/${lv.id}/${bk.id}`,bk.title,`${lv.title} – all units`,c);
+      (bk.units||[]).forEach((u,i)=>{
+        html+=card(`/${lv.id}/${bk.id}/${u.id}`,'Unit '+(i+1),`${lv.title} – ${bk.title}`,c);
+        (u.lessons||[]).forEach(l=>html+=card(`/${lv.id}/${bk.id}/${u.id}/${l.id}`,`Unit ${i+1} – ${l.title}`,`${lv.title} – ${bk.title}`,c));
+      });
       html+=`</div>`;
     });
   });
   app.innerHTML=html;
 }
 function card(h,t,s,c){ return `<div class="qr-card" style="--c:${c}">${qrSvg(linkFor(h))}<div class="t">${esc(t)}</div><div class="s">${esc(s)}</div></div>`; }
+function qrPanel(hash,title,heading,sub){
+  return `<section class="qrpanel" aria-label="QR code for students">
+    <div class="qrimg">${qrSvg(linkFor(hash),4)}</div>
+    <div class="qrtxt"><h3>${esc(heading)}</h3><p>Students scan this to open the page.</p>
+      <div class="row">
+        <button class="tool fill" data-present="${esc(hash)}" data-title="${esc(heading)}" data-sub="${esc(sub)}">Show to class</button>
+        <button class="tool" data-qr="${esc(hash)}" data-title="${esc(title)}">Download or copy link</button>
+      </div></div></section>`;
+}
 function notFound(){ app.innerHTML='<p class="empty">This page doesn’t exist. Pick a level above.</p>'; }
+
+/* Show to class */
+const pres=document.getElementById('present');
+function present(hash,title,sub){
+  const url=linkFor(hash);
+  document.getElementById('pTitle').textContent=title;
+  document.getElementById('pSub').textContent=sub;
+  document.getElementById('pQr').innerHTML=qrSvg(url,10);
+  document.getElementById('pUrl').textContent=url.replace(/^https?:\/\//,'');
+  pres.classList.add('on');
+  try{ pres.requestFullscreen && pres.requestFullscreen().catch(()=>{}); }catch(e){}
+}
+function unpresent(){ pres.classList.remove('on'); try{ document.fullscreenElement && document.exitFullscreen(); }catch(e){} }
+pres.addEventListener('click',unpresent);
+addEventListener('keydown',e=>{ if(e.key==='Escape') unpresent(); });
+document.addEventListener('fullscreenchange',()=>{ if(!document.fullscreenElement) pres.classList.remove('on'); });
+app.addEventListener('click',e=>{ const b=e.target.closest('[data-present]'); if(b) present(b.dataset.present,b.dataset.title,b.dataset.sub); });
 
 /* QR dialog */
 const dlg=document.getElementById('qrDlg'); let curUrl='',curTitle='';
@@ -289,9 +437,9 @@ document.getElementById('qrPng').onclick=()=>{
   const q=qrcode(0,'M');q.addData(curUrl);q.make();
   const n=q.getModuleCount(),cell=16,m=4,size=(n+m*2)*cell,lab=70;
   const c=document.createElement('canvas');c.width=size;c.height=size+lab;const x=c.getContext('2d');
-  x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#17203A';
+  x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.fillStyle='#1F2B28';
   for(let r=0;r<n;r++)for(let k=0;k<n;k++)if(q.isDark(r,k))x.fillRect((k+m)*cell,(r+m)*cell,cell,cell);
-  x.font='bold 30px sans-serif';x.textAlign='center';x.fillText(curTitle,size/2,size+36,size-24);
+  x.font='bold 30px Georgia, serif';x.textAlign='center';x.fillText(curTitle,size/2,size+38,size-24);
   const a=document.createElement('a');a.download=curTitle.replace(/[^\w\- ]+/g,'').trim().replace(/\s+/g,'-')+'-QR.png';a.href=c.toDataURL('image/png');a.click();
 };
 
