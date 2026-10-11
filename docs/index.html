@@ -156,6 +156,16 @@ a{color:inherit}
 .tool{border:1.5px solid var(--brass);background:transparent;color:var(--brass-dk);border-radius:30px;padding:7px 14px;font:700 .85rem var(--body);cursor:pointer;text-decoration:none;display:inline-flex;gap:6px;align-items:center}
 .tool.fill{background:var(--brass);color:#1F2B28}
 .mast .tool{color:var(--brass-lt)}
+.qrset{display:none}
+body.teacher .qrset{display:block;margin-top:26px;padding:16px;border:1.5px solid var(--brass);border-radius:16px;background:color-mix(in srgb,var(--brass) 7%,transparent)}
+.qrset-h{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:12px}
+.qrset-h h3{font:700 1.35rem/1.15 var(--display);margin:0}
+.qrset-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:14px}
+.qrmini{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:12px;border-radius:12px;background:var(--paper);border:1px solid var(--rule)}
+.qrmini .qrimg{background:#fff;border-radius:8px;padding:6px;width:132px}
+.qrmini .qrimg svg{display:block;width:100%;height:auto}
+.qrmini b{font:700 1.15rem/1.15 var(--display)}
+.qrmini .row{margin:0;justify-content:center}
 .qrpanel{display:none}
 body.teacher .qrpanel{display:flex;gap:18px;align-items:center;flex-wrap:wrap;margin-top:26px;padding:16px;border:1.5px solid var(--brass);border-radius:16px;background:color-mix(in srgb,var(--brass) 7%,transparent)}
 .qrpanel .qrimg{background:#fff;border-radius:10px;padding:6px;width:132px;flex:none}
@@ -256,7 +266,9 @@ let DATA=null;
 const app=document.getElementById('app');
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const baseUrl=()=>location.origin+location.pathname.replace(/index\.html$/,'');
-const linkFor=h=>baseUrl()+'#'+h;
+const linkFor=h=>/^https?:/.test(h)?h:baseUrl()+'#'+h;
+const fileUrl=p=>new URL(p,baseUrl()).href;
+const directUrl=l=>l.html?fileUrl(l.html):(l.pdf?fileUrl(l.pdf):null);
 const lvIndex=lv=>DATA.levels.indexOf(lv)+1;
 const colorVar=i=>`var(--l${((i-1)%4)+1})`;
 function setLevelColor(i){ document.documentElement.style.setProperty('--lv', i?colorVar(i):'var(--room-2)'); }
@@ -293,7 +305,7 @@ function route(){
   if(!DATA) return;
   const parts=decodeURIComponent(location.hash.replace(/^#\/?/,'')).split('/').filter(Boolean);
   window.scrollTo(0,0);
-  if(parts[0]==='qr'){ renderLevels(''); setLevelColor(0); return qrPage(parts[1],parts[2]); }
+  if(parts[0]==='qr'){ renderLevels(''); setLevelColor(0); return qrPage(parts[1],parts[2],parts[3]); }
   let lvId=parts[0];
   if(!lvId){ try{ lvId=localStorage.getItem('lastLevel'); }catch(e){} }
   const lv=DATA.levels.find(x=>x.id===lvId)||DATA.levels[0];
@@ -362,7 +374,15 @@ function unitPage(lv,bk,un){
     : `<p class="empty">No worksheets for this unit yet. Check back after class.</p>`;
   const repo=DATA.repo||'mobeldino/mobeldino.github.io';
   html+=`<div class="tbar"><a class="tool fill teacher-only" href="https://github.com/${repo}/upload/main/docs/units/${esc(lv.id)}/${esc(bk.id)}/${esc(un.id)}" target="_blank" rel="noopener">Upload files to this unit</a></div>`;
-  html+=qrPanel(`/${lv.id}/${bk.id}/${un.id}`,`${lv.title} – ${bk.title} – Unit ${i}`,`Unit ${i}${named?': '+un.title:''}`,`${lv.title} – ${bk.title}`);
+  const readyLs=ls.filter(ready);
+  if(readyLs.length){
+    html+=`<section class="qrset" aria-label="QR codes for each worksheet"><div class="qrset-h"><h3>One QR code per worksheet</h3>
+      <a class="tool" href="#/qr/${esc(lv.id)}/${esc(bk.id)}/${esc(un.id)}">Print them</a></div><div class="qrset-grid">`+
+      readyLs.map(l=>`<div class="qrmini"><div class="qrimg">${qrSvg(directUrl(l),4)}</div><b>${esc(l.title)}</b>
+        <div class="row"><button class="tool fill" data-present="${esc(directUrl(l))}" data-title="${esc(l.title)}" data-sub="${esc(`${lv.title} – ${bk.title} – Unit ${i}`)}">Show to class</button>
+        <button class="tool" data-qr="${esc(directUrl(l))}" data-title="${esc(`${lv.title} – ${bk.title} – Unit ${i} – ${l.title}`)}">Download</button></div></div>`).join('')+`</div></section>`;
+  }
+  html+=qrPanel(`/${lv.id}/${bk.id}/${un.id}`,`${lv.title} – ${bk.title} – Unit ${i}`,`Unit ${i}${named?': '+un.title:''}`,`${lv.title} – ${bk.title}`,'Students scan this to see every worksheet in this unit.');
   app.innerHTML=html;
 }
 
@@ -381,11 +401,11 @@ function lessonPage(lv,bk,un,l,num){
     if(l.pdf) html+=`<a href="${esc(l.pdf)}" download="${esc(fn(l.pdf))}">Download PDF</a>`;
     html+=`</div>`;
   } else html+=`<p class="empty">This worksheet isn’t ready yet. Check back after class.</p>`;
-  html+=qrPanel(`/${lv.id}/${bk.id}/${un.id}/${l.id}`,`${lv.title} – ${bk.title} – Unit ${ui} – ${l.title}`,l.title,`${lv.title} – ${bk.title} – Unit ${ui}`);
+  if(ready(l)) html+=qrPanel(directUrl(l),`${lv.title} – ${bk.title} – Unit ${ui} – ${l.title}`,l.title,`${lv.title} – ${bk.title} – Unit ${ui}`,l.html?'Students scan this to open the exercise directly.':'Students scan this to open the PDF directly.');
   app.innerHTML=html;
 }
 
-function qrPage(lvId,bkId){
+function qrPage(lvId,bkId,unId){
   const levels=lvId?DATA.levels.filter(x=>x.id===lvId):DATA.levels;
   let html=`<div class="row noprint" style="justify-content:flex-start;margin-bottom:6px">
     <button class="tool fill" onclick="window.print()">Print or save as PDF</button>
@@ -394,10 +414,11 @@ function qrPage(lvId,bkId){
     const c=colorVar(lvIndex(lv));
     (lv.books||[]).filter(b=>!bkId||b.id===bkId).forEach(bk=>{
       html+=`<h3 class="qr-h" style="--c:${c}">${esc(lv.title)} – ${esc(bk.title)}</h3><div class="qr-grid">`;
-      html+=card(`/${lv.id}/${bk.id}`,bk.title,`${lv.title} – all units`,c);
+      if(!unId) html+=card(`/${lv.id}/${bk.id}`,bk.title,`${lv.title} – all units`,c);
       (bk.units||[]).forEach((u,i)=>{
-        html+=card(`/${lv.id}/${bk.id}/${u.id}`,'Unit '+(i+1),`${lv.title} – ${bk.title}`,c);
-        (u.lessons||[]).forEach(l=>html+=card(`/${lv.id}/${bk.id}/${u.id}/${l.id}`,`Unit ${i+1} – ${l.title}`,`${lv.title} – ${bk.title}`,c));
+        if(unId && u.id!==unId) return;
+        html+=card(`/${lv.id}/${bk.id}/${u.id}`,'Unit '+(i+1),`${lv.title} – ${bk.title} – all worksheets`,c);
+        (u.lessons||[]).filter(ready).forEach(l=>html+=card(directUrl(l),l.title,`${lv.title} – ${bk.title} – Unit ${i+1}`,c));
       });
       html+=`</div>`;
     });
@@ -405,10 +426,10 @@ function qrPage(lvId,bkId){
   app.innerHTML=html;
 }
 function card(h,t,s,c){ return `<div class="qr-card" style="--c:${c}">${qrSvg(linkFor(h))}<div class="t">${esc(t)}</div><div class="s">${esc(s)}</div></div>`; }
-function qrPanel(hash,title,heading,sub){
+function qrPanel(hash,title,heading,sub,hint){
   return `<section class="qrpanel" aria-label="QR code for students">
     <div class="qrimg">${qrSvg(linkFor(hash),4)}</div>
-    <div class="qrtxt"><h3>${esc(heading)}</h3><p>Students scan this to open the page.</p>
+    <div class="qrtxt"><h3>${esc(heading)}</h3><p>${esc(hint||'Students scan this to open the page.')}</p>
       <div class="row">
         <button class="tool fill" data-present="${esc(hash)}" data-title="${esc(heading)}" data-sub="${esc(sub)}">Show to class</button>
         <button class="tool" data-qr="${esc(hash)}" data-title="${esc(title)}">Download or copy link</button>
